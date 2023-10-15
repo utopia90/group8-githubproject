@@ -19,7 +19,12 @@ We're a diverse group with a wide range of skills and interests. From adventurou
 - > Blockquote Text: Speaking Hungarian 🗣️
 - [Link Text](https://example.com): Cooking the most delicious Spanish omelette 🍳
 - Going to cinema and discovering a great movie
-- White tea 🍵
+
+## Interests of This Group
+
+  - Going to cinema and discovering a great movie 🎬
+  - White Tea 🍵
+  - Travelling ✈️
 
 ## Our Projects
 
