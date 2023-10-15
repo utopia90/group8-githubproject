@@ -8,3 +8,4 @@
 - Reading big books 
 - Making Gimbap (Korean Sushi)
 - Speaking Hungarian
+- Cooking the most delicious spanish omelette
