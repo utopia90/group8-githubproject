@@ -1,0 +1,33 @@
+# requirements.txt a file used in Python projects to specify 
+# the required external libraries and their versions. 
+# This file is used for managing project dependencies.
+
+# Below a requirements.txt file typically looks like:
+
+# The name of the project or environment
+name: group8-githubproject
+
+# List of dependencies
+dependencies:
+  # Python version required
+  - python=3.11.3
+  # Specify the version of pip (Python package manager)
+  - pip=23.1.2
+  # Install Python packages using pip
+  - pip:
+    # Django web framework version
+    - django==4.2.2
+    # Django Rest Framework version
+    - djangorestframework==3.14.0
+    # Simple JWT authentication for Django Rest Framework
+    - djangorestframework-simplejwt==5.2.2
+    # Python Imaging Library (PIL) - version of Pillow
+    - pillow==9.5.0
+
+# Once you have a requirements.txt file, you can use the 
+# following command to install all the listed dependencies for your project:
+# This command reads the requirements.txt file and installs the packages and 
+# versions specified in it. Managing dependencies using requirements.txt is 
+# important for ensuring that your project runs consistently across different 
+# environments and for sharing your project with others, as they can easily 
+# recreate the same set of dependencies.
