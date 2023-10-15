@@ -12,9 +12,9 @@ We're a diverse group with a wide range of skills and interests. From adventurou
 
 ## Skills of This Group
 
-- **Bold Text**: Snowboarding 🏂
-- _Italic Text_: Walking around and getting lost 🌍
-- **Bold and Italic Text**: Reading big books 📚
+- **Snowboarding 🏂**
+- _Walking around and getting lost 🌍_
+- _**Reading big books 📚**_
 - `Code Text`: Making Gimbap (Korean Sushi)
 - > Blockquote Text: Speaking Hungarian 🗣️
 - [Link Text](https://example.com): Cooking the most delicious Spanish omelette 🍳
