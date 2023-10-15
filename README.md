@@ -22,7 +22,8 @@ We're a diverse group with a wide range of skills and interests. From adventurou
 ## Our Projects
 
 - 🏞️ **Food Adventure Blog**: Follow our thrilling travel tales and discover hidden gems around the world.
-  ![food blog](https://private-user-images.githubusercontent.com/15132045/275331568-e21a3e8c-19be-4efd-b76c-b91d007618ec.jpg?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50.lmNvbSIsImtleSI6ImtleTEiLCJleHAiOjE2OTczNzk4MjMsIm5iZiI6MTY5NzM3OTUyMywicGF0aCI6Ii8xNTEzMjA0NS8yNzUzMzE5KWUFYNENTVkVINTNBJTJGMjAyMzEwMTUlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjMxMDE1VDE0MTg0M3omWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTNjNmFmODgzYjg4MDExNGM0MTdhZjllNjA1MTMyOGI4MDExMGYzNDRmMWYyYWMxNWU2YmU3NGUwNjg2NDAzOTJhMWQmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JmFjdG9yX2lkPTAma2V5X2lkPTAmcmVwb19pZD0wIn0.1TJBVnkZSTgJy0vU4cyWWjmOsVprwjGveQcKzvYpWk0)
+
+  ![food blog](https://user-images.githubusercontent.com/15132045/275332961-2319de8f-f6f2-4a14-8fe3-b8ede2fe7325.jpg)
 
 ## Contact Us
 
