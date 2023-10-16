@@ -19,6 +19,12 @@ We're a diverse group with a wide range of skills and interests. From adventurou
 - > Blockquote Text: Speaking Hungarian 🗣️
 - [Link Text](https://example.com): Cooking the most delicious Spanish omelette 🍳
 
+## Interests of This Group
+
+  - Going to cinema and discovering a great movie 🎬
+  - White Tea 🍵
+  - Travelling ✈️
+
 ## Our Projects
 
 - 🏞️ **Food Adventure Blog**: Follow our thrilling travel tales and discover hidden gems around the world.
@@ -45,4 +51,6 @@ Here are examples of various text formatting options in Markdown above:
 
 - [Link Text](URL): The last skill is shown as a hyperlink.
 
-Feel free to use these formatting options to make your README more engaging and informative.
+
+
+
