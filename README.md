@@ -4,9 +4,11 @@
 
 ## About Us
 
-| <img src="https://avatars.githubusercontent.com/u/15132045?v=4" width="100" height="100"> | <img src="https://avatars.githubusercontent.com/u/123671831?v=4" width="100" height="100"> | <img src="https://avatars.githubusercontent.com/u/104212130?v=4" width="100" height="100">          |
+| 
+<a href="https://github.com/iamlydial"><img src="https://avatars.githubusercontent.com/u/15132045?v=4" width="100" height="100"></a> |<a href="https://github.com/IldikoW"><img src="https://avatars.githubusercontent.com/u/123671831?v=4" width="100" height="100"> </a>| <a href="https://github.com/RebeBF"><img src="https://avatars.githubusercontent.com/u/104212130?v=4" width="100" height="100"></a>        |
 | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------- |
-| <img src="https://avatars.githubusercontent.com/u/57526996?v=4" width="100" height="100"> | <img src="https://avatars.githubusercontent.com/u/147546112?v=4" width="100" height="100"> | <img src="https://avatars.githubusercontent.com/u/your_image_id_here?v=4" width="100" height="100"> |
+| <a href="https://github.com/utopia90"><img src="https://avatars.githubusercontent.com/u/57526996?v=4" width="100" height="100"> </a>| <a href="https://github.com/isanagu"><img src="https://avatars.githubusercontent.com/u/147546112?v=4" width="100" height="100"> </a>| 
+<a href="https://github.com/AmyLouiseSnelling"><img src="https://avatars.githubusercontent.com/u/41451995?v=4" width="100" height="100"></a> |
 
 We're a diverse group with a wide range of skills and interests. From adventurous outdoor activities to culinary delights, we love exploring life to the fullest.
 
@@ -18,6 +20,15 @@ We're a diverse group with a wide range of skills and interests. From adventurou
 - `Code Text`: Making Gimbap (Korean Sushi)
 - > Blockquote Text: Speaking Hungarian 🗣️
 - [Link Text](https://example.com): Cooking the most delicious Spanish omelette 🍳
+
+
+## Our Technical Skills
+
+  1. Python
+  2. Javascript
+  3. Git
+  4. React
+  
 
 ## Interests of This Group
 
