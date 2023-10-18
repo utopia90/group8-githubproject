@@ -4,7 +4,6 @@
 
 ## About Us
 
-| 
 <a href="https://github.com/iamlydial"><img src="https://avatars.githubusercontent.com/u/15132045?v=4" width="100" height="100"></a> |<a href="https://github.com/IldikoW"><img src="https://avatars.githubusercontent.com/u/123671831?v=4" width="100" height="100"> </a>| <a href="https://github.com/RebeBF"><img src="https://avatars.githubusercontent.com/u/104212130?v=4" width="100" height="100"></a>        |
 | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------- |
 | <a href="https://github.com/utopia90"><img src="https://avatars.githubusercontent.com/u/57526996?v=4" width="100" height="100"> </a>| <a href="https://github.com/isanagu"><img src="https://avatars.githubusercontent.com/u/147546112?v=4" width="100" height="100"> </a>|<a href="https://github.com/AmyLouiseSnelling"><img src="https://avatars.githubusercontent.com/u/41451995?v=4" width="100" height="100"></a> |
