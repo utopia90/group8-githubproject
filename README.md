@@ -37,6 +37,7 @@ We're a diverse group with a wide range of skills and interests. From adventurou
   - Going to cinema and discovering a great movie 🎬
   - White Tea 🍵
   - Travelling ✈️
+  - Playing boardgames 🎲
 
 ## Our Projects
 
