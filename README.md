@@ -18,6 +18,7 @@ We're a diverse group with a wide range of skills and interests. From adventurou
 - `Code Text`: Making Gimbap (Korean Sushi)
 - > Blockquote Text: Speaking Hungarian 🗣️
 - [Link Text](https://example.com): Cooking the most delicious Spanish omelette 🍳
+- Learning languages 🈷️ 
 
 ## Interests of This Group
 
