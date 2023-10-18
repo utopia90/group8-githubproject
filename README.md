@@ -22,13 +22,15 @@ We're a diverse group with a wide range of skills and interests. From adventurou
 - [Link Text](https://example.com): Cooking the most delicious Spanish omelette 🍳
 
 
-## Our Technical Skills
+## Our Coding Skills
 
   1. Python
   2. Javascript
   3. Git
   4. React
-  
+  5. Java
+  6. Bash Scripting
+  7. PHP
 
 ## Interests of This Group
 
