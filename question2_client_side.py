@@ -11,11 +11,85 @@
 import requests
 import json
 
+#POST REQUEST
+# data for cocktail we want to add
+def add_new_cocktail(name, ingredients, recipe):
+    new_cocktail = {
+      "name": name,
+      "ingredients": ingredients,
+      "recipe": recipe
+    }
+    
+# Send POST request
+    url = "http://127.0.0.1:5000/cocktails/add-new-cocktail"
+    headers = {'content-type': 'application/json'}
 
-# POST REQUEST
+    result = requests.post(url,headers=headers, data=json.dumps(new_cocktail))
+
+# Verify if connection was succesful
+    if result.status_code == 200:
+        print("cocktail added successfully!", result.json())
+       
+    else:
+        print("there was an error adding your cocktail: ", result.status_code)
 
 
-# PUT REQUEST
+#PUT REQUEST
+
+# data for cocktail recipe we want to update 
+def update_cocktail(id, updated_recipe):
+
+    updated_recipe = {
+      "id": id,
+      "recipe": updated_recipe
+    }
+    # Send PUT request
+    url = 'http://127.0.0.1:5000/cocktails/update-cocktail/{}'.format(id)
+    headers = {'content-type': 'application/json'}
 
 
-# DELETE REQUEST
+    result = requests.put(url,headers=headers, data=json.dumps(updated_recipe))
+    
+    # Verify if connection was succesful
+    if result.status_code == 200:
+        print("cocktail updated successfully!", result.json())
+    else:
+        print("there was an error", result.status_code)
+
+
+#DELETE REQUEST
+def delete_cocktail(id):
+
+# Send DELETE request
+    url = 'http://127.0.0.1:5000/cocktails/delete-cocktail/{}'.format(id)
+
+    result = requests.delete(url)
+    
+    # Verify if connection was succesful
+    if result.status_code == 200:
+        print("cocktail with id {} removed successfully!".format(id), result.json())
+    else:
+        print("there was an error", result.status_code)
+
+
+def run():
+    print('############################')
+    print('Hello, welcome to our fancy Code Queens Cocktails Bar')
+    print('############################')
+    print('Lets create a new fantastic cocktail!')
+    name = input('Please pick a name for your cocktail ')
+    ingredients = input('Choose the ingredients for your cocktail. Please write them separated by commas ')
+    recipe = input('Choose the recipe for your cocktail ')
+    add_new_cocktail(name, ingredients, recipe)
+    print('Oh! It seems that now you want to modify one of our cocktails recipes!')
+    id = input('Please, introduce the id of the cocktail you want to modify: ')
+    updated_recipe = input('Now enter the new recipe so that we can update it: ')
+    update_cocktail(id, updated_recipe)
+    print('I see you dont like one of our cocktails. its a pity! Lets delete it right now!')
+    id=input('Please, introduce the id of the cocktail you want to delete: ')
+    delete_cocktail(id)
+
+
+
+if __name__ == '__main__':
+   run()
