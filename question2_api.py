@@ -31,14 +31,15 @@ cocktails = [
 # Retrieve all cocktails
 @app.route('/cocktails', methods=['GET'])
 def get_cocktails():
-    return format_result(cocktails)
+    #Here we'll call a db_operations method that retrieve all cocktails we have in the db, raw without formatting. for now, we use our mock data 
+    all_cocktails = cocktails
+    return format_result(all_cocktails)
 
 # Retrieve all cocktails with the given ID from the database
 @app.route('/cocktails/<int:id>', methods=['GET'])
 def get_cocktail(id):
-    # get id from params
-    print("id", id)
-#Here we'll call a db_operations method that filter all cocktails by given id from the database. For the moment we can call mocked data with ids from 0 to 3
+
+#Here we'll call a db_operations method that filter all cocktails by given id from the database and return them raw. For the moment we can call mocked data with ids from 0 to 3
     cocktails_by_id = [cocktail for cocktail in cocktails if cocktail[0] == int(id)]
     return format_result(cocktails_by_id)
 
