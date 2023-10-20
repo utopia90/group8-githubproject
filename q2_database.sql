@@ -33,33 +33,23 @@ Primary key (CocktailId)
 -- create table with a list of alcoholic beverages and their alcohol percentage
 Create Table IF NOT EXISTS AlcoholicBeverages (
 AlcoholicBeverage VARCHAR(30) NOT NULL,
-AlcoholPercentage INT NOT NULL,
+AlcoholPercentage FLOAT NOT NULL,
 Primary key (AlcoholicBeverage)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- create table listing wet ingredients matching cocktailId --
--- provides the amount of the ingredient needed for the recipe in ml. --
-Create Table IF NOT EXISTS WetIngredients (
-WetIngredient VARCHAR(30) NOT NULL,
+-- create table listing ingredients matching cocktailId --
+-- provides the amount of the ingredient needed for the recipe in ml., gr., tea spoons and/or units --
+Create Table IF NOT EXISTS Ingredients (
+Ingredient VARCHAR(30) NOT NULL,
 CocktailId INT NOT NULL,
-AmountMl INT,
-Primary key (WetIngredient, CocktailID)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- create table listing dry ingredients matching cocktailId --
--- provides the amount of the ingredient needed for the recipe 
--- in gr., tea spoons and/or units
-Create Table IF NOT EXISTS DryIngredients (
-DryIngredient VARCHAR(30) NOT NULL,
-CocktailId INT NOT NULL,
-AmountTeaSpoons INT,
-AmountUnits INT,
-WeightGr INT,
-Primary key (DryIngredient, CocktailID)
+AmountMl INT default NULL,
+AmountTeaSpoons INT default NULL,
+AmountUnits INT default NULL,
+WeightGr FLOAT default NULL,
+Primary key (Ingredient, CocktailID)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- 
 -- Populate tables --
 INSERT INTO CocktailsName 
 (CocktailName, Calories, CountryOrigin, Alcoholic)
@@ -69,6 +59,10 @@ VALUES
 ('Mojito', 99, 'Cuba', TRUE),
 ('Bloody Mary', 111, 'France', TRUE),
 ('Sex on the Beach', 326, 'United States', TRUE),
+('Margarita', 170, 'Mexico', TRUE),
+('San Francisco', 160, 'United States', FALSE),
+('Shirley Temple', 97, 'United States', FALSE),
+('Aperol Spritz', 100, 'Italy', TRUE),
 ('Margarita', 170, 'Mexico', TRUE);
 
 
@@ -79,13 +73,18 @@ VALUES
 ('Triple Sec', 39),
 ('White Rum', 37.5),
 ('Cachaça', 45),
-('Vodka', 70),
+('Vodka', 50),
 ('Whiskey', 43),
-('Absinthe', 71);
+('Absinthe', 71),
+('Vermouth', 15), 
+('Citron Vodka', 40),
+('Cointreau', 40),
+('Proseco', 11),
+('Aperol', 11);
 
 
-INSERT INTO WetIngredients 
-(WetIngredient, CocktailId, AmountMl)
+INSERT INTO Ingredients 
+(Ingredient, CocktailId, AmountMl)
 VALUES
 ('White Tequila', 6, 50),
 ('Triple Sec', 6, 25),
@@ -104,10 +103,21 @@ VALUES
 ('Vodka', 5, 40),
 ('Peach juice', 5, 20),
 ('Orange juice', 5, 40),
-('Blueberry juice', 5, 40);
+('Blueberry juice', 5, 40),
+('Granadine', 8, 30),
+('Sparkling water', 8, 50),
+('Orange juice', 7, 50),
+('Pineapple juice', 7, 20),
+('Lemon juice', 7, 10),
+('Proseco', 9, 40),
+('Aperol', 9, 40),
+('Soda water', 9, 5),
+('White Tequila', 10, 50),
+('Triple sec', 10, 25),
+('Lemon juice', 10, 25);
 
-INSERT INTO DryIngredients 
-(DryIngredient, CocktailId, AmountTeaSpoons, AmountUnits, WeightGr)
+INSERT INTO Ingredients 
+(Ingredient, CocktailId, AmountTeaSpoons, AmountUnits, WeightGr)
 VALUES
 ('Salt',6, NULL, NULL, 3),
 ('Sugar', 1, 2, NULL, 30),
@@ -117,5 +127,35 @@ VALUES
 ('Spearmint', 3, NULL, 6, NULL),
 ('White cane sugar', 3, 2, NULL, NULL),
 ('Celery salt', 4, NULL, NULL, 2.5),
-('Black pepper', 4, NULL, NULL, 1);
+('Black pepper', 4, NULL, NULL, 1),
+('Lime juice', 8, 4, NULL, NULL),
+('Lemon juice', 8, 4, NULL, NULL),
+('Cherry', 8, NULL, 2, NULL),
+('Sugar', 7, 1, NULL, NULL),
+('Salt', 10, NULL, NULL, 1);
+
+
+-- For testing porpuses
+-- SELECT *
+-- FROM Ingredients;
+
+
+
+-- Extra data to be used for adding or modifying recipes --
+/* New recipes:
+- ('White russian', 216, 'Belgium', TRUE) ingredients(ml) -> ('Vodka', 50), ('Coffee liquor', 20), ('Cream milk', 30)
+- ('Cosmopolitan', 134, 'United States', TRUE) ingredients(ml) -> ('Vodka Citron', 40), ('Cointreau', 15), ('Lime juice', 15), ('Cranberry juice', 30)
+											   ingredients(units) -> ('Lemon rind', 1)
+- ('Manhattan', 160, 'United States', TRUE) ingredients(ml) -> ('Whiskey', 50), ('Vermouth rosso', 20), ('Angostura', 2)
+- ('Old Fashioned', 205, 'United States', TRUE) ingredients(ml) -> ('Boubon', 45), ('Cold water', 10), ('Angostura bitter', 1)
+												ingredients(units) -> ('Cane sugar cube', 1)
+- 
+
+Adding:
+ - ('Lemon juice', 7, 10) (in ml) to modify San Francisco recipe
+ - ('Vodka', 7, 10) (in ml) to add alcohol to the San Francisco recipe ***ALCOHOLIC must be changed to TRUE***
+ - ('Mango', 1, 1) (in units) to make Daiquiri a Mango Daiquiri ++Calories will rise to 295++
+*/
+
+
 
