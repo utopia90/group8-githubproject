@@ -5,7 +5,6 @@
 <h3 align="center">Our Slogan: 👑 Reigning in the Digital Realm 👑</h3><br>
 
 
-
 <h3 align="left">Our Team:</h3><br>
 
 <div style="float: center;">
@@ -18,8 +17,6 @@
 </div><br><br>
 
 - 🔭 We're currently working on our _**amazing**_ [CodeFirstGirls API project](https://github.com/utopia90/group8-githubproject) _(Click this handy link to see it)_<br><br>
-
-- 💎 Our Skills include: **🏂 Snowboarding 🌍 Walking around/Getting lost 🎭 Opera Singing 🍱 Making Gimbap 🗣️ Speaking Hungarian 🍳 Making (delicious) Spanish Omelette**<br><br>
 
 - 💬 Our Interests include: **🎬 Cinema 🍵 White Tea 🛫 Travelling 🎲 Boardgames 📚 Reading**<br><br>
 
