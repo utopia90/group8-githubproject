@@ -8,23 +8,14 @@
 
 <h3 align="left">Our Team:</h3><br>
 
-<div style="float: right;">
-<table>
-  <tr>
+<div style="float: center;">
     <td align="center"><a href="https://github.com/iamlydial"><img src="https://avatars.githubusercontent.com/u/15132045?v=4" width="100" height="100"></a></td>
     <td align="center"><a href="https://github.com/IldikoW"><img src="https://avatars.githubusercontent.com/u/123671831?v=4" width="100" height="100"></a></td>
-  </tr>
-  <tr>
     <td align="center"><a href="https://github.com/RebeBF"><img src="https://avatars.githubusercontent.com/u/104212130?v=4" width="100" height="100"></a></td>
     <td align="center"><a href="https://github.com/utopia90"><img src="https://avatars.githubusercontent.com/u/57526996?v=4" width="100" height="100"></a></td>
-  </tr>
-  <tr>
     <td align="center"><a href="https://github.com/isanagu"><img src="https://avatars.githubusercontent.com/u/147546112?v=4" width="100" height="100"></a></td>
     <td align="center"><a href="https://github.com/AmyLouiseSnelling"><img src="https://avatars.githubusercontent.com/u/41451995?v=4" width="100" height="100"></a></td>
-  </tr>
-</table>
-
-</div>
+</div><br><br>
 
 - 🔭 We're currently working on our _**amazing**_ [CodeFirstGirls API project](https://github.com/utopia90/group8-githubproject) _(Click this handy link to see it)_<br><br>
 
@@ -67,7 +58,7 @@
 <h3 align="left">Support us here:</h3><br><br>
 <p><a href="https://www.buymeacoffee.com/codequeens"> <img align=“center” src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="50" width="210" alt="codequeens" /></a></p><br>
 
-<h3 align="left">Check out our food Blog here:</h3><br>
+<h3 align="left">Check out our Food Blog here:</h3><br>
 
 - 🏞️ **Food Adventure Blog**: Follow our thrilling travel tales and discover hidden gems around the world.
 
