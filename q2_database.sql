@@ -105,7 +105,6 @@ VALUES
 ('Lemon juice'),
 ('Cherry'),
 ('Sugar');
-('Tequila')
 
 INSERT INTO CocktailIngredients (CocktailId,IngredientId, AmountTeaSpoons, AmountUnits, WeightGr)
 VALUES
