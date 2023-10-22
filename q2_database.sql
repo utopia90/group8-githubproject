@@ -84,7 +84,8 @@ VALUES
 ('Margarita', 170, 'Mexico', TRUE);
 
 
-INSERT INTO Ingredients(IngredientName) 
+INSERT INTO Ingredients
+(IngredientName) 
 VALUES
 ('Salt'),
 ('Sugar'),
@@ -124,7 +125,8 @@ VALUES
 -- SELECT *
 -- FROM Ingredients;
 
-INSERT INTO CocktailIngredients (CocktailId, IngredientId, AmountTeaSpoons, AmountUnits, WeightGr)
+INSERT INTO CocktailIngredients 
+(CocktailId, IngredientId, AmountTeaSpoons, AmountUnits, WeightGr)
 VALUES
 (6,1, NULL, NULL, 2),
 (1,2, NULL, 30, NULL),
@@ -132,16 +134,16 @@ VALUES
 (2,4, NULL, 1, NULL),
 (2,5, 4, NULL, NULL),
 (3,6, NULL, 6, NULL),
-(3,7, 2, NULL, NULL),
-(4,8,NULL, NULL, 2.5),
-(4,9, NULL, NULL, 1),
-(8,10, NULL, NULL,2),
-(8,11,4, NULL, NULL),
-(8,12, NULL, 2, NULL),
-(7,13,NULL, NULL,5),
-(9,13,NULL, NULL, 1);
+(3,5, 2, NULL, NULL),
+(4,7, NULL, NULL, 2.5),
+(4,8, NULL, NULL, 1),
+(8,9, NULL, NULL,2),
+(8,10,4, NULL, NULL),
+(8,11, NULL, 2, NULL),
+(7,2, 1, NULL, NULL),
+(9,1,NULL, NULL, 1);
 
-INSERT INTO Ingredients 
+INSERT INTO CocktailIngredients 
 (IngredientId, CocktailId, AmountMl)
 VALUES
 (22, 6, 50),
@@ -178,6 +180,8 @@ VALUES
 -- For testing porpuses
 -- SELECT *
 -- FROM Ingredients;
+-- SELECT *
+-- FROM CocktailIngredients;
 
 
 
