@@ -21,13 +21,13 @@ Create Database IF NOT EXISTS Cocktails;
 Use Cocktails;
 
 -- create table containing cocktail name and information --
-Create Table IF NOT EXISTS CocktailsName (
-CocktailId INT auto_increment NOT NULL,
+Create Table IF NOT EXISTS CocktailsInfo (
+Id INT auto_increment NOT NULL,
 CocktailName VARCHAR(30) NOT NULL,
 Calories INT,
 CountryOrigin VARCHAR(30),
 Alcoholic BOOL NOT NULL,
-Primary key (CocktailId)
+Primary key (Id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- create table with a list of alcoholic beverages and their alcohol percentage
@@ -39,19 +39,27 @@ Primary key (AlcoholicBeverage)
 
 -- create table listing ingredients matching cocktailId --
 -- provides the amount of the ingredient needed for the recipe in ml., gr., tea spoons and/or units --
-Create Table IF NOT EXISTS Ingredients (
-Ingredient VARCHAR(30) NOT NULL,
-CocktailId INT NOT NULL,
-AmountMl INT default NULL,
-AmountTeaSpoons INT default NULL,
-AmountUnits INT default NULL,
-WeightGr FLOAT default NULL,
-Primary key (Ingredient, CocktailID)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS Ingredients (
+    IngredientId INT AUTO_INCREMENT NOT NULL,
+    IngredientName VARCHAR(30) NOT NULL,
+    PRIMARY KEY (IngredientId)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- Intermediary table that links cocktails with the ingredients we use.
+CREATE TABLE IF NOT EXISTS CocktailIngredients (
+    CocktailId INT NOT NULL,
+    IngredientId INT NOT NULL,
+    AmountMl INT DEFAULT NULL,
+    AmountTeaSpoons INT DEFAULT NULL,
+    AmountUnits INT DEFAULT NULL,
+    WeightGr FLOAT DEFAULT NULL,
+    PRIMARY KEY (CocktailId, IngredientId),
+    FOREIGN KEY (CocktailId) REFERENCES CocktailsInfo(Id),
+    FOREIGN KEY (IngredientId) REFERENCES Ingredients(IngredientId)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Populate tables --
-INSERT INTO CocktailsName 
+INSERT INTO CocktailsInfo
 (CocktailName, Calories, CountryOrigin, Alcoholic)
 VALUES
 ('Daiquiri', 264, 'Cuba', TRUE),
@@ -59,7 +67,6 @@ VALUES
 ('Mojito', 99, 'Cuba', TRUE),
 ('Bloody Mary', 111, 'France', TRUE),
 ('Sex on the Beach', 326, 'United States', TRUE),
-('Margarita', 170, 'Mexico', TRUE),
 ('San Francisco', 160, 'United States', FALSE),
 ('Shirley Temple', 97, 'United States', FALSE),
 ('Aperol Spritz', 100, 'Italy', TRUE),
@@ -83,56 +90,40 @@ VALUES
 ('Aperol', 11);
 
 
-INSERT INTO Ingredients 
-(Ingredient, CocktailId, AmountMl)
+INSERT INTO Ingredients(IngredientName) 
 VALUES
-('White Tequila', 6, 50),
-('Triple Sec', 6, 25),
-('Lemon juice', 6, 25),
-('White rum', 1, 60),
-('Lime juice', 1, 20),
-('Cachaça', 2, 60),
-('White rum', 3, 45),
-('Lime juice', 3, 20),
-('Sparkling water', 3, 20),
-('Vodka', 4, 45),
-('Tomato juice', 4, 90),
-('Limon juice', 4, 15),
-('Worcestersire sauce', 4, 5),
-('Tabasco', 4, 2),
-('Vodka', 5, 40),
-('Peach juice', 5, 20),
-('Orange juice', 5, 40),
-('Blueberry juice', 5, 40),
-('Granadine', 8, 30),
-('Sparkling water', 8, 50),
-('Orange juice', 7, 50),
-('Pineapple juice', 7, 20),
-('Lemon juice', 7, 10),
-('Proseco', 9, 40),
-('Aperol', 9, 40),
-('Soda water', 9, 5),
-('White Tequila', 10, 50),
-('Triple sec', 10, 25),
-('Lemon juice', 10, 25);
+('Salt'),
+('Sugar'),
+('Ice'),
+('Lime'),
+('White cane sugar'),
+('Spearmint'),
+('White cane sugar'),
+('Celery salt'),
+('Black pepper'),
+('Lime juice'),
+('Lemon juice'),
+('Cherry'),
+('Sugar');
+('Tequila')
 
-INSERT INTO Ingredients 
-(Ingredient, CocktailId, AmountTeaSpoons, AmountUnits, WeightGr)
+INSERT INTO CocktailIngredients (CocktailId,IngredientId, AmountTeaSpoons, AmountUnits, WeightGr)
 VALUES
-('Salt',6, NULL, NULL, 3),
-('Sugar', 1, 2, NULL, 30),
-('Ice', 1, NULL, 4, NULL),
-('Lime', 2, NULL, 1, NULL),
-('White cane sugar', 2, 4, NULL, NULL),
-('Spearmint', 3, NULL, 6, NULL),
-('White cane sugar', 3, 2, NULL, NULL),
-('Celery salt', 4, NULL, NULL, 2.5),
-('Black pepper', 4, NULL, NULL, 1),
-('Lime juice', 8, 4, NULL, NULL),
-('Lemon juice', 8, 4, NULL, NULL),
-('Cherry', 8, NULL, 2, NULL),
-('Sugar', 7, 1, NULL, NULL),
-('Salt', 10, NULL, NULL, 1);
+(6,1, NULL, NULL, 2),
+(1,2, NULL, 30, NULL),
+(1,3, NULL, 4, NULL),
+(2,4, NULL, 1, NULL),
+(2,5, 4, NULL, NULL),
+(3,6, NULL, 6, NULL),
+(3,7, 2, NULL, NULL),
+(4,8,NULL, NULL, 2.5),
+(4,9, NULL, NULL, 1),
+(8,10, NULL, NULL,2),
+(8,11,4, NULL, NULL),
+(8,12, NULL, 2, NULL),
+(7,13,NULL, NULL,5),
+(10,13,NULL, NULL, 1);
+(9,10, 2, NULL, NULL)
 
 
 -- For testing porpuses

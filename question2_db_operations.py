@@ -35,7 +35,7 @@ def get_all_cocktail_recipes():
 
         query = """
         SELECT *
-        FROM CocktailsName
+        FROM CocktailsInfo
         """
 
         cur.execute(query)  # Execute the SQL query to retrieve cocktail data
@@ -46,8 +46,7 @@ def get_all_cocktail_recipes():
         cur.close()  # Close the cursor
 
         # You can now work with the fetched data if needed
-        for cocktail in cocktail_menu:
-            print(cocktail)  # Print each cocktail data
+        return cocktail_menu
 
     except Exception:
         raise DbConnectionError("Failed to read data from DB")  # Raise a custom exception for database connection errors
@@ -60,12 +59,13 @@ def get_all_cocktail_recipes():
 def get_cocktail_by_id(cocktail_id):
     try:
         # Establish a database connection
-        db_connection = _connect_to_db('YourDatabaseName')
+        db_connection = _connect_to_db('Cocktails')
         cursor = db_connection.cursor()
 
         # Execute an SQL query to fetch the cocktail by ID
-        query = "SELECT * FROM CocktailsName WHERE id = %s"
+        query = "SELECT * FROM CocktailsInfo WHERE id = %s"
         cursor.execute(query, (cocktail_id,))
+
 
         # Fetch the data
         cocktail_data = cursor.fetchone()
@@ -73,7 +73,7 @@ def get_cocktail_by_id(cocktail_id):
         # Close the cursor and the connection
         cursor.close()
         db_connection.close()
-
+       
         return cocktail_data  # Return the cocktail data
     except Exception as e:
         raise DbConnectionError(f"Failed to fetch cocktail by ID: {str(e)}")
@@ -81,13 +81,15 @@ def get_cocktail_by_id(cocktail_id):
 
 def get_cocktails_by_ingredient(ingredient):
     try:
+        cocktails_with_ingredient  = []  # Initialize an empty list to store cocktail data
         # Establish a database connection
-        db_connection = _connect_to_db('YourDatabaseName')
+        db_connection = _connect_to_db('Cocktails')
         cursor = db_connection.cursor()
 
         # Execute an SQL query to fetch cocktails by ingredient
-        query = "SELECT * FROM CocktailsName WHERE ingredients LIKE %s"
-        cursor.execute(query, ("%" + ingredient + "%",))
+        query = "SELECT c.* FROM CocktailsInfo c JOIN CocktailIngredients ci ON c.Id = ci.CocktailId JOIN Ingredients i ON ci.IngredientId = i.IngredientId WHERE i.IngredientName LIKE %s"
+        cursor.execute(query, ('%'+ingredient+'%',))
+
 
         # Fetch the data
         cocktails_with_ingredient = cursor.fetchall()
@@ -95,19 +97,19 @@ def get_cocktails_by_ingredient(ingredient):
         # Close the cursor and the connection
         cursor.close()
         db_connection.close()
+        return cocktails_with_ingredient
 
-        return cocktails_with_ingredient  # Return the cocktails that contain the ingredient
     except Exception as e:
         raise DbConnectionError(f"Failed to fetch cocktails by ingredient: {str(e)}")
 
 def get_cocktails_sorted_by_name_asc():
     try:
         # Establish a database connection
-        db_connection = _connect_to_db('YourDatabaseName')
+        db_connection = _connect_to_db('Cocktails')
         cursor = db_connection.cursor()
 
         # Execute an SQL query to fetch all cocktails and sort them by name in ascending order
-        query = "SELECT * FROM CocktailsName ORDER BY name ASC"
+        query = "SELECT * FROM CocktailsInfo c ORDER BY c.CocktailName ASC"
         cursor.execute(query)
 
         # Fetch the data

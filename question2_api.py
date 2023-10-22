@@ -10,7 +10,7 @@
 # Python Packages imports 
 from flask import Flask, jsonify, request
 # below additional import we will have to specify and uncomment in order to import the data and utils functions
-# from cocktail_data import cocktails
+from question2_db_operations import get_all_cocktail_recipes, get_cocktail_by_id,get_cocktails_by_ingredient,get_cocktails_sorted_by_name_asc
 # from utils import function1, function2 (we are going to rename the fuction according to the new name)
 from utils import format_result
 
@@ -26,63 +26,34 @@ cocktails = [
     (3, 'Old Fashioned', 'whiskey, sugar, bitters', 'recipe of cocktail old fashioned'),
     (4, 'Tequila Sunrise', 'tequila, orange juice, grenadine', 'recipe of tequila sunrise')
 ]
-# defining the root in our web application
+# defining the root in our web applications
 @app.route('/')
 # Retrieve all cocktails
 @app.route('/cocktails', methods=['GET'])
 def get_cocktails():
-    #Here we'll call a db_operations method that retrieve all cocktails we have in the db, raw without formatting. for now, we use our mock data 
-    all_cocktails = cocktails
+    all_cocktails = get_all_cocktail_recipes()
     return format_result(all_cocktails)
 
 # Retrieve all cocktails with the given ID from the database
 @app.route('/cocktails/<int:id>', methods=['GET'])
 def get_cocktail(id):
 
-#Here we'll call a db_operations method that filter all cocktails by given id from the database and return them raw. For the moment we can call mocked data with ids from 0 to 3
-    cocktails_by_id = [cocktail for cocktail in cocktails if cocktail[0] == int(id)]
-    return format_result(cocktails_by_id)
+    cocktail_by_id = get_cocktail_by_id(id)
+    return format_result([cocktail_by_id])
 
-# Retrieve all cocktails that contain the given ingredient from the database
 @app.route('/cocktails/ingredients/<string:ingredient>', methods=['GET'])
-def get_cocktails_by_ingredient(ingredient):
-#Here we'll call a db_operations method that filter all cocktails by given ingredient from the database. 
-    filtered_cocktaiks = [cocktail for cocktail in cocktails if  ingredient in cocktail[2]]
+def get_cocktails_filtered_by_ingredient(ingredient):
+    filtered_cocktaiks = get_cocktails_by_ingredient(ingredient)
     
     return format_result(filtered_cocktaiks)
 
-# Retrieve all cocktails that were added in the last week from the database
-@app.route('/cocktails/new', methods=['GET'])
-def get_new_cocktails():
-    #Here we'll call a db_operations method that retrieve all cocktails that were added in the last week from the database. For the moment we can try with Margarita
-    new_cocktails = [cocktails[0]]
-    return format_result(new_cocktails)
 
 # Retrieve all cocktails from the database and sort them by name in ascending order
 @app.route('/cocktails/sort-name-asc', methods=['GET'])
-def get_cocktails_sorted_by_name_asc():
-    #Here we'll call a db_operations method that retrieve all cocktails sorted in asc order. For the moment we can sort the mocked data
-
-   sorted_cocktails = sorted(cocktails, key=lambda x: x[1])
+def get_all_cocktails_sorted_by_name_asc():
+   sorted_cocktails = get_cocktails_sorted_by_name_asc()
    return format_result(sorted_cocktails)
 
-
-@app.route('/cocktails/add-new-cocktail', methods=['POST'])
-def add_new_cocktail():
-    #get cocktail json from body request
-    cocktail = request.get_json()
-    name=cocktail['name']
-    ingredients=cocktail['ingredients']
-    recipe=cocktail['recipe']
-    
-    #Here we'll call a db_operations method that post a cocktail in database that takes as params the cocktail fields  and return the new cocktail added details
-    new_cocktail_details = {
-      "name": name,
-      "ingredients": ingredients,
-      "recipe": recipe
-    } 
-      
-    return {"message": "cocktail added sucessfully!", "new_cocktail_added_details: ":   new_cocktail_details}
 
 
 @app.route('/cocktails/update-cocktail/<string:id>', methods=['PUT'])
