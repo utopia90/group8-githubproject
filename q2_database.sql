@@ -30,7 +30,6 @@ Id INT auto_increment NOT NULL,
 CocktailName VARCHAR(30) NOT NULL,
 Calories INT,
 CountryOrigin VARCHAR(30),
-Alcoholic BOOL NOT NULL,
 Primary key (Id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -38,6 +37,7 @@ Primary key (Id)
 CREATE TABLE IF NOT EXISTS Ingredients (
     IngredientId INT AUTO_INCREMENT NOT NULL,
     IngredientName VARCHAR(30) NOT NULL,
+    IsAlcoholic BOOL DEFAULT FALSE,
     PRIMARY KEY (IngredientId)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -71,17 +71,17 @@ CREATE TABLE IF NOT EXISTS RecipesArchive (
 
 -- Populate tables --
 INSERT INTO CocktailsInfo
-(CocktailName, Calories, CountryOrigin, Alcoholic)
+(CocktailName, Calories, CountryOrigin)
 VALUES
-('Daiquiri', 264, 'Cuba', TRUE),
-('Caipirinha', 390, 'Brazil', TRUE),
-('Mojito', 99, 'Cuba', TRUE),
-('Bloody Mary', 111, 'France', TRUE),
-('Sex on the Beach', 326, 'United States', TRUE),
-('San Francisco', 160, 'United States', FALSE),
-('Shirley Temple', 97, 'United States', FALSE),
-('Aperol Spritz', 100, 'Italy', TRUE),
-('Margarita', 170, 'Mexico', TRUE);
+('Daiquiri', 264, 'Cuba'),
+('Caipirinha', 390, 'Brazil'),
+('Mojito', 99, 'Cuba'),
+('Bloody Mary', 111, 'France'),
+('Sex on the Beach', 326, 'United States'),
+('San Francisco', 160, 'United States'),
+('Shirley Temple', 97, 'United States'),
+('Aperol Spritz', 100, 'Italy'),
+('Margarita', 170, 'Mexico');
 
 
 INSERT INTO Ingredients
@@ -107,19 +107,23 @@ VALUES
 ('Blueberry juice'),
 ('Granadine'),
 ('Pineapple juice'),
-('Soda water'),
-('White Tequila'),
-('Triple Sec'),
-('White Rum'),
-('Cachaça'),
-('Vodka'),
-('Whiskey'),
-('Absinthe'),
-('Vermouth'), 
-('Citron Vodka'),
-('Cointreau'),
-('Proseco'),
-('Aperol');
+('Soda water');
+
+INSERT INTO Ingredients
+(IngredientName, IsAlcoholic) 
+VALUES
+('White Tequila', TRUE),
+('Triple Sec', TRUE),
+('White Rum', TRUE),
+('Cachaça', TRUE),
+('Vodka', TRUE),
+('Whiskey', TRUE),
+('Absinthe', TRUE),
+('Vermouth', TRUE),
+('Citron Vodka', TRUE),
+('Cointreau', TRUE),
+('Proseco', TRUE),
+('Aperol', TRUE);
 
 -- Testing
 -- SELECT *
@@ -146,9 +150,9 @@ VALUES
 INSERT INTO CocktailIngredients 
 (IngredientId, CocktailId, AmountMl)
 VALUES
-(22, 6, 50),
-(23, 6, 25),
-(10, 6, 25),
+(22, 9, 50),
+(23, 9, 25),
+(10, 9, 25),
 (24, 1, 60),
 (9, 1, 20),
 (25, 2, 60),
@@ -164,17 +168,14 @@ VALUES
 (16, 5, 20),
 (17, 5, 40),
 (18, 5, 40),
-(19, 8, 30),
-(12, 8, 50),
-(17, 7, 50),
-(20, 7, 20),
-(10, 7, 10),
-(32, 9, 40),
-(33, 9, 40),
-(21, 9, 5),
-(22, 10, 50),
-(23, 10, 25),
-(10, 10, 25);
+(19, 7, 30),
+(12, 7, 50),
+(17, 6, 50),
+(20, 6, 20),
+(10, 6, 10),
+(32, 8, 40),
+(33, 8, 40),
+(21, 8, 5);
 
 
 -- For testing porpuses
