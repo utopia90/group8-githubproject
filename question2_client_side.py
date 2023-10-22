@@ -12,30 +12,83 @@ import requests
 import json
 
 
-#Welcome message are you a bartender or a client?
-login_name=input ('Welcome to the Code Queens Cocktail Bar. Please, type in if you are a bartender or a client')
-if login_name =='bartender':
+# Check if the client wants another drink
+def another_drink():
+    another_drink = input("Would you like to order another drink? ")
 
-elif login_name=='client':
-if client: 
-    select=input("Select 1: to pick a drink from the menu  Select 2: Barman recommendation  Select 3:  to pick by liquor ingredient 
-    Select 4: Make your own drink")
-        if select==1:
-            print ("Here is the menu.")
-        elif select==2:
-        elif select==3:
-        elif select ==4:
-        else: 
-            print ("Choose a number from 1 to 4");
-            
-            
-#3. Select 1 to pick a drink by the menu, Select 2: Barman recommendation; Select 3: if you want to pick by liquor ingredient; 
-            Select 4: Make your own (distinction with alcohol and nonalcohol options)
-#4. Show the menu + type the ID to choose your cocktail    print cocktail chosen + enjoy:
-#select 1 if you want another cocktail or Exit 
+    if another_drink.lower() == 'yes':
+        client_menu()
 
-else :
-    print('Please, type bartender or client.')
+def login():
+    login_name = input("Welcome to the Code Queens Cocktail Bar. Please type if you are a bartender or a client: ")
+
+    if login_name == 'bartender':
+        # Add bartender logic here
+        pass
+    elif login_name == 'client':
+        client_menu()
+
+    else:
+        print('Please type "bartender" or "client".')
+        login()
+
+def client_menu():
+    select_choice = input("Select 1: Pick a drink from the menu  Select 2: Barman recommendation  
+            Select 3:  Pick your drink by liquor ingredient 
+            Select 4: Make your own drink ")
+
+    if select_choice == '1':
+        print("Here is the menu.")
+        # Call get_cocktails() 
+        drink_choice= input("Type the name of the cocktail here.  ")
+        print("You are having a" + drink_choice + ". Enjoy your drink.")
+        
+    elif select_choice == '2':
+        print("This is what our bartender would recommend.")
+        # Call get_barman_recommendation()
+    elif select_choice == '3':
+        ingredient=input("What ingredient you like in your drink?")
+        # function(ingredient)
+
+    elif select_choice == '4':
+        print("Let`s go on a cocktail adventure. ")
+        
+        ingredients = []
+
+        while True:  # The loop will continue until the customer decides not to add more ingredients
+           ingredient = input("What ingredient would you like in your drink? ")
+           ingredients.append(ingredient)  
+
+          another_ingredient = input("Would you like any other ingredients? (yes/no) ")
+
+          if another_ingredient.lower() != "yes":
+              break  # Exit the loop 
+
+
+        print("Your drink will include the following ingredients: " + ", ".join(ingredients))
+        #funtion to save it in db?
+    else:
+        print("Choose a number from 1 to 4")
+        client_menu()
+    another_drink()
+
+login()
+
+
+print("Thank you for visiting our bar. See you soon.")
+    
+        
+     
+
+
+
+
+
+
+
+
+
+
 
 
 #POST REQUEST
