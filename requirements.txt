@@ -15,14 +15,9 @@ dependencies:
   - pip=23.1.2
   # Install Python packages using pip
   - pip:
-    # Django web framework version
-    - django==4.2.2
-    # Django Rest Framework version
-    - djangorestframework==3.14.0
-    # Simple JWT authentication for Django Rest Framework
-    - djangorestframework-simplejwt==5.2.2
-    # Python Imaging Library (PIL) - version of Pillow
-    - pillow==9.5.0
+    flask==2.0.1
+    mysql-connector-python==8.0.27
+
 
 # Once you have a requirements.txt file, you can use the 
 # following command to install all the listed dependencies for your project:
