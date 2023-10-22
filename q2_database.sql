@@ -121,7 +121,7 @@ VALUES
 (8,11,4, NULL, NULL),
 (8,12, NULL, 2, NULL),
 (7,13,NULL, NULL,5),
-(10,13,NULL, NULL, 1);
+(9,13,NULL, NULL, 1);
 
 
 -- For testing porpuses
