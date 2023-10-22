@@ -24,6 +24,7 @@ Use Cocktails;
 /* Columns: Id (to uniquely identify cocktails) is table's primery key
 			CocktailName, Calories, CountryOrigin, ALcoholic 
             (Value showing if the selected cocktails contains ALcohol or not)*/
+            
 Create Table IF NOT EXISTS CocktailsInfo (
 Id INT auto_increment NOT NULL,
 CocktailName VARCHAR(30) NOT NULL,
@@ -54,6 +55,7 @@ CREATE TABLE IF NOT EXISTS CocktailIngredients (
     FOREIGN KEY (IngredientId) REFERENCES Ingredients(IngredientId)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
 /* -- COMMENTED BY NOW, TO BE USED IF NEEDED --
 -- create archive table for the recipes removed from the menu through the API --
 CREATE TABLE IF NOT EXISTS RecipesArchive (
@@ -66,7 +68,6 @@ CREATE TABLE IF NOT EXISTS RecipesArchive (
     PRIMARY KEY (CocktailName, IngredientId),
     FOREIGN KEY (IngredientId) REFERENCES Ingredients(IngredientId)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;*/
-
 
 -- Populate tables --
 INSERT INTO CocktailsInfo
