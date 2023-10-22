@@ -32,9 +32,10 @@ Primary key (CocktailId)
 
 -- create table with a list of alcoholic beverages and their alcohol percentage
 Create Table IF NOT EXISTS AlcoholicBeverages (
+AlcoholicBeverageID INT auto_increment NOT NULL,
 AlcoholicBeverage VARCHAR(30) NOT NULL,
 AlcoholPercentage FLOAT NOT NULL,
-Primary key (AlcoholicBeverage)
+Primary key (AlcoholicBeverageID)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- create table listing ingredients matching cocktailId --
@@ -46,7 +47,10 @@ AmountMl INT default NULL,
 AmountTeaSpoons INT default NULL,
 AmountUnits INT default NULL,
 WeightGr FLOAT default NULL,
-Primary key (Ingredient, CocktailID)
+AlcoholicBeverageID INT default NULL,
+Primary key (Ingredient, CocktailID),
+Foreign key (CocktailID) REFERENCES CocktailsName(CocktailID),
+Foreign key (AlcoholicBeverageID) REFERENCES AlcoholicBeverages(AlcoholicBeverageID)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -82,39 +86,38 @@ VALUES
 ('Proseco', 11),
 ('Aperol', 11);
 
-
 INSERT INTO Ingredients 
-(Ingredient, CocktailId, AmountMl)
+(Ingredient, CocktailId, AmountMl, AlcoholicBeverageID)
 VALUES
-('White Tequila', 6, 50),
-('Triple Sec', 6, 25),
-('Lemon juice', 6, 25),
-('White rum', 1, 60),
-('Lime juice', 1, 20),
-('Cachaça', 2, 60),
-('White rum', 3, 45),
-('Lime juice', 3, 20),
-('Sparkling water', 3, 20),
-('Vodka', 4, 45),
-('Tomato juice', 4, 90),
-('Limon juice', 4, 15),
-('Worcestersire sauce', 4, 5),
-('Tabasco', 4, 2),
-('Vodka', 5, 40),
-('Peach juice', 5, 20),
-('Orange juice', 5, 40),
-('Blueberry juice', 5, 40),
-('Granadine', 8, 30),
-('Sparkling water', 8, 50),
-('Orange juice', 7, 50),
-('Pineapple juice', 7, 20),
-('Lemon juice', 7, 10),
-('Proseco', 9, 40),
-('Aperol', 9, 40),
-('Soda water', 9, 5),
-('White Tequila', 10, 50),
-('Triple sec', 10, 25),
-('Lemon juice', 10, 25);
+('White Tequila', 6, 50, 1),
+('Triple Sec', 6, 25, 2),
+('Lemon juice', 6, 25, NULL),
+('White rum', 1, 60, 3),
+('Lime juice', 1, 20, NULL),
+('Cachaça', 2, 60, 4),
+('White rum', 3, 45, 3),
+('Lime juice', 3, 20, NULL),
+('Sparkling water', 3, 20, NULL),
+('Vodka', 4, 45, 5),
+('Tomato juice', 4, 90, NULL),
+('Limon juice', 4, 15, NULL),
+('Worcestersire sauce', 4, 5, NULL),
+('Tabasco', 4, 2, NULL),
+('Vodka', 5, 40, 5),
+('Peach juice', 5, 20, NULL),
+('Orange juice', 5, 40, NULL),
+('Blueberry juice', 5, 40, NULL),
+('Granadine', 8, 30, NULL),
+('Sparkling water', 8, 50, NULL),
+('Orange juice', 7, 50, NULL),
+('Pineapple juice', 7, 20, NULL),
+('Lemon juice', 7, 10, NULL),
+('Proseco', 9, 40, 11),
+('Aperol', 9, 40, 12),
+('Soda water', 9, 5, NULL),
+('White Tequila', 10, 50, 1),
+('Triple sec', 10, 25, 2),
+('Lemon juice', 10, 25, NULL);
 
 INSERT INTO Ingredients 
 (Ingredient, CocktailId, AmountTeaSpoons, AmountUnits, WeightGr)
