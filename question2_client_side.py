@@ -1,21 +1,38 @@
 #  SUMMARY ================================================================
 # in this file we have the HTTP requests to the Flask web application run in the file question2_api.py 
-# It is interacting with the FLsk web application's endpoints using HTTP methods (POST, PUT, DELETE).
+# It is interacting with the Flask web application's endpoints using HTTP methods (POST, PUT, DELETE).
 # This file completes the set of common CRUD (Create, Read, Update, Delete) operations, that we started
 # in the question2_api file which contains GET requests.
 # We use  a separate script that acts as a client for the web application, 
 # demonstrating how to interact with the web application's API. 
 #  =========================================================================
-
 # Python Packages imports 
+
 import requests
 import json
+
 
 #Welcome message are you a bartender or a client?
 login_name=input ('Welcome to the Code Queens Cocktail Bar. Please, type in if you are a bartender or a client')
 if login_name =='bartender':
 
-else if login_name=='client':
+elif login_name=='client':
+if client: 
+    select=input("Select 1: to pick a drink from the menu  Select 2: Barman recommendation  Select 3:  to pick by liquor ingredient 
+    Select 4: Make your own drink")
+        if select==1:
+            print ("Here is the menu.")
+        elif select==2:
+        elif select==3:
+        elif select ==4:
+        else: 
+            print ("Choose a number from 1 to 4");
+            
+            
+#3. Select 1 to pick a drink by the menu, Select 2: Barman recommendation; Select 3: if you want to pick by liquor ingredient; 
+            Select 4: Make your own (distinction with alcohol and nonalcohol options)
+#4. Show the menu + type the ID to choose your cocktail    print cocktail chosen + enjoy:
+#select 1 if you want another cocktail or Exit 
 
 else :
     print('Please, type bartender or client.')
