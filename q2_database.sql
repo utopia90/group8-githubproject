@@ -21,37 +21,55 @@ Create Database IF NOT EXISTS Cocktails;
 Use Cocktails;
 
 -- create table containing cocktail name and information --
-Create Table IF NOT EXISTS CocktailsName (
-CocktailId INT auto_increment NOT NULL,
+/* Columns: Id (to uniquely identify cocktails) is table's primery key
+			CocktailName, Calories, CountryOrigin, ALcoholic 
+            (Value showing if the selected cocktails contains ALcohol or not)*/
+Create Table IF NOT EXISTS CocktailsInfo (
+Id INT auto_increment NOT NULL,
 CocktailName VARCHAR(30) NOT NULL,
 Calories INT,
 CountryOrigin VARCHAR(30),
 Alcoholic BOOL NOT NULL,
-Primary key (CocktailId)
+Primary key (Id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- create table with a list of alcoholic beverages and their alcohol percentage
-Create Table IF NOT EXISTS AlcoholicBeverages (
-AlcoholicBeverage VARCHAR(30) NOT NULL,
-AlcoholPercentage FLOAT NOT NULL,
-Primary key (AlcoholicBeverage)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+-- create table listing all ingredients and their Id --
+CREATE TABLE IF NOT EXISTS Ingredients (
+    IngredientId INT AUTO_INCREMENT NOT NULL,
+    IngredientName VARCHAR(30) NOT NULL,
+    PRIMARY KEY (IngredientId)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- create table listing ingredients matching cocktailId --
+-- create table listing ingredients matching cocktailId (through a composite primary key) --
 -- provides the amount of the ingredient needed for the recipe in ml., gr., tea spoons and/or units --
-Create Table IF NOT EXISTS Ingredients (
-Ingredient VARCHAR(30) NOT NULL,
-CocktailId INT NOT NULL,
-AmountMl INT default NULL,
-AmountTeaSpoons INT default NULL,
-AmountUnits INT default NULL,
-WeightGr FLOAT default NULL,
-Primary key (Ingredient, CocktailID)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS CocktailIngredients (
+    CocktailId INT NOT NULL,
+    IngredientId INT NOT NULL,
+    AmountMl INT DEFAULT NULL,
+    AmountTeaSpoons INT DEFAULT NULL,
+    AmountUnits INT DEFAULT NULL,
+    WeightGr FLOAT DEFAULT NULL,
+    PRIMARY KEY (CocktailId, IngredientId),
+    FOREIGN KEY (CocktailId) REFERENCES CocktailsInfo(Id),
+    FOREIGN KEY (IngredientId) REFERENCES Ingredients(IngredientId)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/* -- COMMENTED BY NOW, TO BE USED IF NEEDED --
+-- create archive table for the recipes removed from the menu through the API --
+CREATE TABLE IF NOT EXISTS RecipesArchive (
+    CocktailName VARCHAR(30) NOT NULL
+    IngredientId INT NOT NULL,
+    AmountMl INT DEFAULT NULL,
+    AmountTeaSpoons INT DEFAULT NULL,
+    AmountUnits INT DEFAULT NULL,
+    WeightGr FLOAT DEFAULT NULL,
+    PRIMARY KEY (CocktailName, IngredientId),
+    FOREIGN KEY (IngredientId) REFERENCES Ingredients(IngredientId)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;*/
 
 
 -- Populate tables --
-INSERT INTO CocktailsName 
+INSERT INTO CocktailsInfo
 (CocktailName, Calories, CountryOrigin, Alcoholic)
 VALUES
 ('Daiquiri', 264, 'Cuba', TRUE),
@@ -59,80 +77,101 @@ VALUES
 ('Mojito', 99, 'Cuba', TRUE),
 ('Bloody Mary', 111, 'France', TRUE),
 ('Sex on the Beach', 326, 'United States', TRUE),
-('Margarita', 170, 'Mexico', TRUE),
 ('San Francisco', 160, 'United States', FALSE),
 ('Shirley Temple', 97, 'United States', FALSE),
 ('Aperol Spritz', 100, 'Italy', TRUE),
 ('Margarita', 170, 'Mexico', TRUE);
 
 
-INSERT INTO AlcoholicBeverages
-(AlcoholicBeverage, AlcoholPercentage)
+INSERT INTO Ingredients(IngredientName) 
 VALUES
-('White Tequila', 38),
-('Triple Sec', 39),
-('White Rum', 37.5),
-('Cachaça', 45),
-('Vodka', 50),
-('Whiskey', 43),
-('Absinthe', 71),
-('Vermouth', 15), 
-('Citron Vodka', 40),
-('Cointreau', 40),
-('Proseco', 11),
-('Aperol', 11);
+('Salt'),
+('Sugar'),
+('Ice'),
+('Lime'),
+('White cane sugar'),
+('Spearmint'),
+('Celery salt'),
+('Black pepper'),
+('Lime juice'),
+('Lemon juice'),
+('Cherry'),
+('Sparkling water'),
+('Tomato juice'),
+('Worcestersire sauce'),
+('Tabasco'),
+('Peach juice'),
+('Orange juice'),
+('Blueberry juice'),
+('Granadine'),
+('Pineapple juice'),
+('Soda water'),
+('White Tequila'),
+('Triple Sec'),
+('White Rum'),
+('Cachaça'),
+('Vodka'),
+('Whiskey'),
+('Absinthe'),
+('Vermouth'), 
+('Citron Vodka'),
+('Cointreau'),
+('Proseco'),
+('Aperol');
 
+-- Testing
+-- SELECT *
+-- FROM Ingredients;
+
+INSERT INTO CocktailIngredients (CocktailId, IngredientId, AmountTeaSpoons, AmountUnits, WeightGr)
+VALUES
+(6,1, NULL, NULL, 2),
+(1,2, NULL, 30, NULL),
+(1,3, NULL, 4, NULL),
+(2,4, NULL, 1, NULL),
+(2,5, 4, NULL, NULL),
+(3,6, NULL, 6, NULL),
+(3,7, 2, NULL, NULL),
+(4,8,NULL, NULL, 2.5),
+(4,9, NULL, NULL, 1),
+(8,10, NULL, NULL,2),
+(8,11,4, NULL, NULL),
+(8,12, NULL, 2, NULL),
+(7,13,NULL, NULL,5),
+(9,13,NULL, NULL, 1);
 
 INSERT INTO Ingredients 
-(Ingredient, CocktailId, AmountMl)
+(IngredientId, CocktailId, AmountMl)
 VALUES
-('White Tequila', 6, 50),
-('Triple Sec', 6, 25),
-('Lemon juice', 6, 25),
-('White rum', 1, 60),
-('Lime juice', 1, 20),
-('Cachaça', 2, 60),
-('White rum', 3, 45),
-('Lime juice', 3, 20),
-('Sparkling water', 3, 20),
-('Vodka', 4, 45),
-('Tomato juice', 4, 90),
-('Limon juice', 4, 15),
-('Worcestersire sauce', 4, 5),
-('Tabasco', 4, 2),
-('Vodka', 5, 40),
-('Peach juice', 5, 20),
-('Orange juice', 5, 40),
-('Blueberry juice', 5, 40),
-('Granadine', 8, 30),
-('Sparkling water', 8, 50),
-('Orange juice', 7, 50),
-('Pineapple juice', 7, 20),
-('Lemon juice', 7, 10),
-('Proseco', 9, 40),
-('Aperol', 9, 40),
-('Soda water', 9, 5),
-('White Tequila', 10, 50),
-('Triple sec', 10, 25),
-('Lemon juice', 10, 25);
-
-INSERT INTO Ingredients 
-(Ingredient, CocktailId, AmountTeaSpoons, AmountUnits, WeightGr)
-VALUES
-('Salt',6, NULL, NULL, 3),
-('Sugar', 1, 2, NULL, 30),
-('Ice', 1, NULL, 4, NULL),
-('Lime', 2, NULL, 1, NULL),
-('White cane sugar', 2, 4, NULL, NULL),
-('Spearmint', 3, NULL, 6, NULL),
-('White cane sugar', 3, 2, NULL, NULL),
-('Celery salt', 4, NULL, NULL, 2.5),
-('Black pepper', 4, NULL, NULL, 1),
-('Lime juice', 8, 4, NULL, NULL),
-('Lemon juice', 8, 4, NULL, NULL),
-('Cherry', 8, NULL, 2, NULL),
-('Sugar', 7, 1, NULL, NULL),
-('Salt', 10, NULL, NULL, 1);
+(22, 6, 50),
+(23, 6, 25),
+(10, 6, 25),
+(24, 1, 60),
+(9, 1, 20),
+(25, 2, 60),
+(24, 3, 45),
+(9, 3, 20),
+(12, 3, 20),
+(26, 4, 45),
+(13, 4, 90),
+(10, 4, 15),
+(14, 4, 5),
+(15, 4, 2),
+(26, 5, 40),
+(16, 5, 20),
+(17, 5, 40),
+(18, 5, 40),
+(19, 8, 30),
+(12, 8, 50),
+(17, 7, 50),
+(20, 7, 20),
+(10, 7, 10),
+(32, 9, 40),
+(33, 9, 40),
+(21, 9, 5),
+(22, 10, 50),
+(23, 10, 25),
+(10, 10, 25);
 
 
 -- For testing porpuses
@@ -152,10 +191,11 @@ VALUES
 - 
 
 Adding:
- - ('Lemon juice', 7, 10) (in ml) to modify San Francisco recipe
- - ('Vodka', 7, 10) (in ml) to add alcohol to the San Francisco recipe ***ALCOHOLIC must be changed to TRUE***
+ - ('Lemon juice', 6, 10) (in ml) to modify San Francisco recipe
+ - ('Vodka', 6, 10) (in ml) to add alcohol to the San Francisco recipe ***ALCOHOLIC must be changed to TRUE***
  - ('Mango', 1, 1) (in units) to make Daiquiri a Mango Daiquiri ++Calories will rise to 295++
 */
+
 
 
 
