@@ -17,15 +17,6 @@ from utils import format_result
 
 app = Flask(__name__)
 
-# GETTING INFORMATION FROM 
-
-#MOCKED DATA: this data should be replaced for database data when we finish the conection config.
-cocktails = [
-    (1, 'Margarita', 'tequila, lime juice, triple sec', 'recipe of cocktail margarita'),
-    (2, 'Martini', 'gin, vermouth', 'recipe of cocktail martini'),
-    (3, 'Old Fashioned', 'whiskey, sugar, bitters', 'recipe of cocktail old fashioned'),
-    (4, 'Tequila Sunrise', 'tequila, orange juice, grenadine', 'recipe of tequila sunrise')
-]
 # defining the root in our web applications
 @app.route('/')
 # Retrieve all cocktails
