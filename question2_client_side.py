@@ -11,6 +11,16 @@
 import requests
 import json
 
+#Welcome message are you a bartender or a client?
+login_name=input ('Welcome to the Code Queens Cocktail Bar. Please, type in if you are a bartender or a client')
+if login_name =='bartender':
+
+else if login_name=='client':
+
+else :
+    print('Please, type bartender or client.')
+
+
 #POST REQUEST
 # data for cocktail we want to add
 def add_new_cocktail(name, ingredients, recipe):
