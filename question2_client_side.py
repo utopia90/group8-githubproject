@@ -52,8 +52,21 @@ def client_menu():
 
     elif select_choice == '4':
         print("Let`s go on a cocktail adventure. ")
-        ingredient=input("What ingredient you like in your drink?")
-        #function ()
+        
+        ingredients = []
+
+        while True:  # The loop will continue until the customer decides not to add more ingredients
+           ingredient = input("What ingredient would you like in your drink? ")
+           ingredients.append(ingredient)  
+
+          another_ingredient = input("Would you like any other ingredients? (yes/no) ")
+
+          if another_ingredient.lower() != "yes":
+              break  # Exit the loop 
+
+
+        print("Your drink will include the following ingredients: " + ", ".join(ingredients))
+        #funtion to save it in db?
     else:
         print("Choose a number from 1 to 4")
         client_menu()
