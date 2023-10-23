@@ -60,6 +60,7 @@ CREATE TABLE IF NOT EXISTS CocktailIngredients (
 -- create archive table for the recipes removed from the menu through the API --
 CREATE TABLE IF NOT EXISTS RecipesArchive (
     CocktailName VARCHAR(30) NOT NULL
+    CocktailId INT NOT NULL,
     IngredientId INT NOT NULL,
     AmountMl INT DEFAULT NULL,
     AmountTeaSpoons INT DEFAULT NULL,
