@@ -267,11 +267,12 @@ def update_cocktail():
         remove_ingredient(cocktailId)
 
 def  delete_cocktail():
-      cocktailId = input("Which cocktail id would like to remove? :'\n'")
      # get Cocktails List in here
       cocktails_list = get_cocktails_list()
       print(cocktails_list)
       
+      cocktailId = input("Which cocktail id would like to remove? :'\n'")
+    
       # Send DELETE request
       url = 'http://127.0.0.1:5000/cocktails/delete-cocktail/{}'.format(cocktailId)
 
