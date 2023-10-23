@@ -1,6 +1,6 @@
 #Readme about API
 
-This guide provides step by step instructions abut how to set up and run ... .api on your enviroments.
+This guide provides step-by-step instructions about how to set up and run ... .api in your environment.
 
 **Requirements**
 
@@ -8,7 +8,7 @@ This guide provides step by step instructions abut how to set up and run ... .ap
 
 #Readme about API
 
-This guide provides step by step instructions abut how to set up and run ... .api on your enviroments.
+This guide provides step-by-step instructions about how to set up and run ... .api on your environment.
 
 **Requirements**
 
@@ -23,21 +23,16 @@ This guide provides step by step instructions abut how to set up and run ... .ap
 **Running the API**
 
 
-**API end points**
+**API endpoints**
+
+
 
 **What to expect**
+
+
 
 **Troubleshooting**
 
 
 
 
-**Running the API**
-
-
-**API end points**
-
-**What to expect**
-
-
-**Troubleshooting**
