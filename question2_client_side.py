@@ -8,8 +8,8 @@
 #  =========================================================================
 # Python Packages imports 
 
-import requests
-import json
+#import requests
+#import json
 
 
 # Check if the client wants another drink
@@ -56,9 +56,9 @@ def client_menu():
            ingredient = input("What ingredient would you like in your drink? ")
            ingredients.append(ingredient)  
 
-          another_ingredient = input("Would you like any other ingredients? (yes/no) ")
+           another_ingredient = input("Would you like any other ingredients? (yes/no) ")
 
-          if another_ingredient.lower() != "yes":
+           if another_ingredient.lower() != "yes":
               break  # Exit the loop 
 
 
@@ -72,29 +72,32 @@ def client_menu():
 
 
 
-print("Thank you for visiting our bar. See you soon.")
+
     
         
 def bartender_menu():
-    PASSPHRASE = ""
+    PASSPHRASE = "password"
     valid_password = PASSPHRASE
-    name = input("What is your password?:\n")
-    for i in range(4):
-        password = input("Enter a valid password:\n")
-        if password == valid_password:
-            break
+    password = input("What is your password?:\n")
+    #for i in range(4):
+
     if password != valid_password:
+        password = input("Enter a valid password:\n")
         return
-    chosen_update = input("What would you like to do?: add, remove or modify a cocktail?:\n")
-    if chosen_update == 'add':
-        add_new_cocktail()
-    elif chosen_update == 'remove':
-        delete_cocktail()
-    elif chosen_update == 'modify':
-        update_cocktail()
-    else:
-        print("I could not understand your request")
-        bartender_menu()
+    if password == valid_password:
+
+        chosen_update = input("What would you like to do?: add, remove or modify a cocktail?:\n")
+        if chosen_update == 'add':
+            add_new_cocktail()
+        elif chosen_update == 'remove':
+            print("remove")
+             #delete_cocktail()
+        elif chosen_update == 'modify':
+            update_cocktail()
+        else:
+            print("I could not understand your request")
+            bartender_menu()
+
 
 
 def add_ingredients():
@@ -102,18 +105,25 @@ def add_ingredients():
     amounts = []
     units = []
     new_ingredient = True
-    i = 0
+
     while new_ingredient:
-        ingredients[i] = input("Add a new ingredient:'\n'")
-        units[i] = input("Select the measure unit (ml, gr, tea spoons or unites):'\n'")
-        while units[i] != 'ml' and units[i] != 'gr' and units[i].lower != 'tea spoons' and units[i].lowercase() != 'unites': #check lowercase or lower in here
-            print("You did not select a valid measure unit. Please, try again")
-            units[i] = input("Select between: ml, gr, teaspoons or unites:'\n'")
-        amounts[i] = float(input("Insert in the amount of {} in {}:'\n'".format(ingredients[i], units[i])))
-        another_ingredient = input("Do you want to add another ingredient to the recipe? (Y/N):'\n'").upper
+        ingredient = input("Add a new ingredient:\n")
+        ingredients.append(ingredient)
+
+        unit = input("Select the measurement unit (ml, gr, tea spoons, or units):\n")
+        while unit not in ['ml', 'gr', 'tea spoons', 'units']:
+            print("You did not select a valid measurement unit. Please, try again")
+            unit = input("Select between: ml, gr, tea spoons, or units:\n")
+        units.append(unit)
+
+        amount = float(input("Insert the amount \n"))
+        amounts.append(amount)
+
+        another_ingredient = input("Do you want to add another ingredient to the recipe? (Y/N):\n").upper()
         if another_ingredient != 'Y':
             new_ingredient = False
-    return {ingredients, amounts, units,} # check return
+
+    return {'ingredients': ingredients, 'amounts': amounts, 'units': units}
 
 
 def modify_ingredient():
@@ -127,7 +137,7 @@ def modify_ingredient():
 
 
 def remove_ingredient():
-    ingredient = input("Ingredient you want to modify:'\n'")
+    ingredient = input("Ingredient you want to modify:\n")
     # get data from database check ingredients if exists:
     # if exists
     # remove from DB
@@ -136,25 +146,25 @@ def remove_ingredient():
 #POST REQUEST
 # data for cocktail we want to add
 def add_new_cocktail():
-    name = input("What is the name of the new cocktail?:'\n'")
+    name = input("What is the name of the new cocktail?:\n")
     add_ingredients()
-    new_cocktail = {
-      "CocktailName": name,
-      "ingredients": ingredients,
-    }
+   # new_cocktail = {
+     # "CocktailName": name,
+   #   "ingredients": ingredients,
+   # }
     
 # Send POST request
-    url = "http://127.0.0.1:5000/cocktails/add-new-cocktail"
-    headers = {'content-type': 'application/json'}
+   # url = "http://127.0.0.1:5000/cocktails/add-new-cocktail"
+    #headers = {'content-type': 'application/json'}
 
-    result = requests.post(url,headers=headers, data=json.dumps(new_cocktail))
+   # result = requests.post(url,headers=headers, data=json.dumps(new_cocktail))
 
 # Verify if connection was succesful
-    if result.status_code == 200:
-        print("cocktail added successfully!", result.json())
+ #   if result.status_code == 200:
+  #      print("cocktail added successfully!", result.json())
        
-    else:
-        print("there was an error adding your cocktail: ", result.status_code)
+   # else:
+   #     print("there was an error adding your cocktail: ", result.status_code)
 
 
 #PUT REQUEST
@@ -176,46 +186,46 @@ def update_cocktail():
 
 
 # NOT HERE
-    updated_recipe = {
-      "id": id,
-      "recipe": updated_recipe
-    }
+  #  updated_recipe = {
+   #   "id": id,
+  #    "recipe": updated_recipe
+  #  }
     # Send PUT request
-    url = 'http://127.0.0.1:5000/cocktails/update-cocktail/{}'.format(id)
-    headers = {'content-type': 'application/json'}
+  #  url = 'http://127.0.0.1:5000/cocktails/update-cocktail/{}'.format(id)
+  #  headers = {'content-type': 'application/json'}
 
 
-    result = requests.put(url,headers=headers, data=json.dumps(updated_recipe))
+   # result = requests.put(url,headers=headers, data=json.dumps(updated_recipe))
     
     # Verify if connection was succesful
-    if result.status_code == 200:
-        print("cocktail updated successfully!", result.json())
-    else:
-        print("there was an error", result.status_code)
+ #   if result.status_code == 200:
+ #       print("cocktail updated successfully!", result.json())
+  #  else:
+  #      print("there was an error", result.status_code)
 
 
 #DELETE REQUEST
-def delete_cocktail(id):
+#def delete_cocktail(id):
 
 # Send DELETE request
-    url = 'http://127.0.0.1:5000/cocktails/delete-cocktail/{}'.format(id)
+  #  url = 'http://127.0.0.1:5000/cocktails/delete-cocktail/{}'.format(id)
 
-    result = requests.delete(url)
+ #   result = requests.delete(url)
     
     # Verify if connection was succesful
-    if result.status_code == 200:
-        print("cocktail with id {} removed successfully!".format(id), result.json())
-    else:
-        print("there was an error", result.status_code)
-
-
-def run():
-    print('############################')
-    print('Hello, welcome to our fancy Code Queens Cocktails Bar')
-    print('############################')
-    login()
+  #  if result.status_code == 200:
+  #      print("cocktail with id {} removed successfully!".format(id), result.json())
+  #  else:
+   #     print("there was an error", result.status_code)
 
 
 
-if __name__ == '__main__':
-   run()
+print('############################')
+print('Hello, welcome to our fancy Code Queens Cocktails Bar')
+print('############################')
+login()
+print("Thank you for visiting our bar. See you soon.")
+
+
+#if __name__ == '__main__':
+ #  run()
