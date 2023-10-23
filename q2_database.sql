@@ -67,7 +67,8 @@ CREATE TABLE IF NOT EXISTS RecipesArchive (
     AmountUnits INT DEFAULT NULL,
     WeightGr FLOAT DEFAULT NULL,
     PRIMARY KEY (CocktailName, IngredientId),
-    FOREIGN KEY (IngredientId) REFERENCES Ingredients(IngredientId)
+    FOREIGN KEY (IngredientId) REFERENCES Ingredients(IngredientId),
+    FOREIGN KEY (CocktailId) REFERENCES CocktailsInfo(Id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;*/
 
 -- Populate tables --
