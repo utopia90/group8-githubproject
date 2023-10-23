@@ -156,9 +156,9 @@ def post_new_cocktail(cocktail_name, ingredients, amounts, units):
     except Exception as e:
         print("Failed to add cocktail to DB:", str(e))
     finally:
+        print('Cocktail with name {} was added successfully!'.format(cocktail_name))
         if db_connection:
             db_connection.close()
-
 # declaring cocktail variable to be populated based on table structure
 cocktail = {}
 
