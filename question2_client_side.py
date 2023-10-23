@@ -69,23 +69,23 @@ def client_menu():
         client_menu()
     another_drink()
 
-login()
+
 
 
 print("Thank you for visiting our bar. See you soon.")
     
         
 def bartender_menu():
-    # PASSPHRASE = ""
+    PASSPHRASE = ""
     valid_password = PASSPHRASE
-    name = input("What is your name?:'\n'")
+    name = input("What is your password?:\n")
     for i in range(4):
-        password = input("Enter a valid password:'\n'")
+        password = input("Enter a valid password:\n")
         if password == valid_password:
             break
     if password != valid_password:
         return
-    chosen_update = input("What would you like to do?: add, remove or modify a cocktail?:'\n'")
+    chosen_update = input("What would you like to do?: add, remove or modify a cocktail?:\n")
     if chosen_update == 'add':
         add_new_cocktail()
     elif chosen_update == 'remove':
@@ -108,7 +108,7 @@ def add_ingredients():
         units[i] = input("Select the measure unit (ml, gr, tea spoons or unites):'\n'")
         while units[i] != 'ml' and units[i] != 'gr' and units[i].lower != 'tea spoons' and units[i].lowercase() != 'unites': #check lowercase or lower in here
             print("You did not select a valid measure unit. Please, try again")
-            units[i] = input("Select between: ml, gr, tea spoons or unites:'\n'")
+            units[i] = input("Select between: ml, gr, teaspoons or unites:'\n'")
         amounts[i] = float(input("Insert in the amount of {} in {}:'\n'".format(ingredients[i], units[i])))
         another_ingredient = input("Do you want to add another ingredient to the recipe? (Y/N):'\n'").upper
         if another_ingredient != 'Y':
