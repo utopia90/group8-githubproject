@@ -86,6 +86,20 @@ def update_cocktail():
       
     return {"message": "cocktail updated sucessfully!", "updated_cocktail_details: ":  ingredient}
 
+@app.route('/cocktails/add-new-ingredients', methods=['PUT'])
+def update_cocktail_ingredients():
+
+    #get cocktail ingredient details from body request json
+    ingredient = request.get_json()
+    cocktailId = ingredient['cocktailId']
+    ingredients = ingredient['ingredients']
+    amounts = ingredient['amounts']
+    units = ingredient['units']
+
+    #call db method and retrieve cocktail updated details!!
+      
+    return {"message": "cocktail ingredients added sucessfully!", "updated_cocktail_details: ":  ingredient}
+
 @app.route('/cocktails/<string:cocktailid>/delete-ingredient/<string:ingredientid>', methods=['DELETE'])
 def delete_cocktail_ingredient(id):
 
