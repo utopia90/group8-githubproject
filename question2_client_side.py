@@ -23,8 +23,7 @@ def login():
     login_name = input("Welcome to the Code Queens Cocktail Bar. Please type if you are a bartender or a client: ")
 
     if login_name == 'bartender':
-        # Add bartender logic here
-        pass
+        bartender_menu()
     elif login_name == 'client':
         client_menu()
 
@@ -33,21 +32,19 @@ def login():
         login()
 
 def client_menu():
-    select_choice = input("Select 1: Pick a drink from the menu  Select 2: Barman recommendation  
-            Select 3:  Pick your drink by liquor ingredient 
-            Select 4: Make your own drink ")
+    select_choice = input("Select 1: Pick a drink from the menu'\n'Select 2: Barman recommendation'\n'Select 3: Pick your drink by liquor ingredient'\n'Select 4: Make your own drink ")
 
     if select_choice == '1':
         print("Here is the menu.")
         # Call get_cocktails() 
-        drink_choice= input("Type the name of the cocktail here.  ")
+        drink_choice= input("Type the name of the cocktail here:  ")
         print("You are having a" + drink_choice + ". Enjoy your drink.")
         
     elif select_choice == '2':
         print("This is what our bartender would recommend.")
         # Call get_barman_recommendation()
     elif select_choice == '3':
-        ingredient=input("What ingredient you like in your drink?")
+        ingredient=input("What ingredient you like in your drink?:'\n'")
         # function(ingredient)
 
     elif select_choice == '4':
@@ -78,26 +75,72 @@ login()
 print("Thank you for visiting our bar. See you soon.")
     
         
-     
+def bartender_menu():
+    # PASSPHRASE = ""
+    valid_password = PASSPHRASE
+    name = input("What is your name?:'\n'")
+    for i in range(4):
+        password = input("Enter a valid password:'\n'")
+        if password == valid_password:
+            break
+    if password != valid_password:
+        return
+    chosen_update = input("What would you like to do?: add, remove or modify a cocktail?:'\n'")
+    if chosen_update == 'add':
+        add_new_cocktail()
+    elif chosen_update == 'remove':
+        delete_cocktail()
+    elif chosen_update == 'modify':
+        update_cocktail()
+    else:
+        print("I could not understand your request")
+        bartender_menu()
 
 
+def add_ingredients():
+    ingredients = []
+    amounts = []
+    units = []
+    new_ingredient = True
+    i = 0
+    while new_ingredient:
+        ingredients[i] = input("Add a new ingredient:'\n'")
+        units[i] = input("Select the measure unit (ml, gr, tea spoons or unites):'\n'")
+        while units[i] != 'ml' and units[i] != 'gr' and units[i].lower != 'tea spoons' and units[i].lowercase() != 'unites': #check lowercase or lower in here
+            print("You did not select a valid measure unit. Please, try again")
+            units[i] = input("Select between: ml, gr, tea spoons or unites:'\n'")
+        amounts[i] = float(input("Insert in the amount of {} in {}:'\n'".format(ingredients[i], units[i])))
+        another_ingredient = input("Do you want to add another ingredient to the recipe? (Y/N):'\n'").upper
+        if another_ingredient != 'Y':
+            new_ingredient = False
+    return {ingredients, amounts, units,} # check return
 
 
+def modify_ingredient():
+    ingredient = input("Ingredient you want to modify:'\n'")
+    # get data from database check ingredients if exists:
+    # if exists
+    unit = input("Select the measure unit (ml, gr, tea spoons or unites):'\n'")
+    amount = float(input("Insert in the amount of {} in {}:'\n'".format(ingredient, unit)))
+    # insert into DB
+    
 
 
-
-
-
-
+def remove_ingredient():
+    ingredient = input("Ingredient you want to modify:'\n'")
+    # get data from database check ingredients if exists:
+    # if exists
+    # remove from DB
 
 
 #POST REQUEST
 # data for cocktail we want to add
-def add_new_cocktail(name, ingredients, recipe):
+def add_new_cocktail():
+    name = input("What is the name of the new cocktail?:'\n'")
+    add_ingredients()
     new_cocktail = {
-      "name": name,
+      "CocktailName": name,
       "ingredients": ingredients,
-      "recipe": recipe
     }
     
 # Send POST request
@@ -117,8 +160,22 @@ def add_new_cocktail(name, ingredients, recipe):
 #PUT REQUEST
 
 # data for cocktail recipe we want to update 
-def update_cocktail(id, updated_recipe):
+def update_cocktail():
+    CocktailName = input("Which cocktail recipe would like to modify?:'\n'")
+    # get Cocktails List in here
+    # if CocktailName not in Cocktails:
+    #       print("That recipe is not in our database")
+    #       update_cocktail()
+    add_modify = input("What would like to do with the ingredients add, modify or remove?:'\n'").lower
+    if add_modify == 'add':
+        add_ingredients()
+    elif add_modify == 'modify':
+        modify_ingredient()
+    elif add_modify == 'remove':
+        remove_ingredient()
 
+
+# NOT HERE
     updated_recipe = {
       "id": id,
       "recipe": updated_recipe
@@ -156,18 +213,7 @@ def run():
     print('############################')
     print('Hello, welcome to our fancy Code Queens Cocktails Bar')
     print('############################')
-    print('Lets create a new fantastic cocktail!')
-    name = input('Please pick a name for your cocktail ')
-    ingredients = input('Choose the ingredients for your cocktail. Please write them separated by commas ')
-    recipe = input('Choose the recipe for your cocktail ')
-    add_new_cocktail(name, ingredients, recipe)
-    print('Oh! It seems that now you want to modify one of our cocktails recipes!')
-    id = input('Please, introduce the id of the cocktail you want to modify: ')
-    updated_recipe = input('Now enter the new recipe so that we can update it: ')
-    update_cocktail(id, updated_recipe)
-    print('I see you dont like one of our cocktails. its a pity! Lets delete it right now!')
-    id=input('Please, introduce the id of the cocktail you want to delete: ')
-    delete_cocktail(id)
+    login()
 
 
 
