@@ -123,6 +123,41 @@ def get_cocktails_sorted_by_name_asc():
     except Exception as e:
         raise DbConnectionError(f"Failed to fetch sorted cocktails: {str(e)}")
 
+def post_new_cocktail(cocktail_name, ingredients, amounts, units):
+    try:
+        db_name = 'Cocktails'
+        db_connection = _connect_to_db(db_name)
+        cur = db_connection.cursor()
+
+        # Insert into CocktailsInfo
+        insert_query_cocktail_info = """
+            INSERT INTO CocktailsInfo (CocktailName, Calories, CountryOrigin, Alcoholic)
+            VALUES (%s,%s,%s,%s)
+        """
+        cur.execute(insert_query_cocktail_info, (cocktail_name, None, None, True))
+
+        cocktail_id = cur.lastrowid  # Get the last inserted cocktail ID
+
+        # Insert ingredients
+        for idx, ingredientId in enumerate(ingredients):
+            ingredient_id_query = "SELECT IngredientId FROM Ingredients WHERE IngredientId = %s"
+            cur.execute(ingredient_id_query, (ingredientId,))
+            ingredient_id = cur.fetchone()[0]
+            print(ingredient_id)
+            insert_query_cocktail_ingredients = """
+                INSERT INTO CocktailIngredients (CocktailId, IngredientId, AmountMl, AmountTeaSpoons, AmountUnits, WeightGr)
+                VALUES (%s, %s, %s, %s, %s, %s)
+            """
+            cur.execute(insert_query_cocktail_ingredients, (cocktail_id, ingredient_id, amounts[idx], None, units[idx], None))
+
+
+        db_connection.commit()
+        
+    except Exception as e:
+        print("Failed to add cocktail to DB:", str(e))
+    finally:
+        if db_connection:
+            db_connection.close()
 
 # declaring cocktail variable to be populated based on table structure
 cocktail = {}
