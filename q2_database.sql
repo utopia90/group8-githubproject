@@ -51,7 +51,6 @@ CREATE TABLE IF NOT EXISTS CocktailIngredients (
     AmountUnits INT DEFAULT NULL,
     WeightGr FLOAT DEFAULT NULL,
     PRIMARY KEY (CocktailId, IngredientId),
-    FOREIGN KEY (CocktailId) REFERENCES CocktailsInfo(Id),
     FOREIGN KEY (IngredientId) REFERENCES Ingredients(IngredientId)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
