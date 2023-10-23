@@ -137,13 +137,13 @@ def getIngredientsList():
     else:
         print("there retrieving list of ingredients: ", result.status_code)
     
-def modify_ingredient():
-    ingredient = input("Ingredient Id you want to modify:'\n'")
+def modify_ingredient(cocktailId):
+    
     ingredients_list = getIngredientsList()
-    
     print(ingredients_list)
-    
-    
+    ingredient = input("Ingredient Id you want to modify:'\n'")
+ 
+
     unit = input("Select the measure unit (ml, gr, tea spoons or unites):'\n'")
     amount = float(input("Insert in the amount in {}:'\n'".format(unit)))
         
@@ -151,7 +151,8 @@ def modify_ingredient():
     headers = {'content-type': 'application/json'}
         
     updated_ingredient = {
-            "id": ingredient,
+            "cocktailId":cocktailId,
+            "ingredientId": ingredient,
             "unit": unit,
             "amount": amount
         }
@@ -167,15 +168,16 @@ def modify_ingredient():
   
 
 
-def remove_ingredient():
-    
-    ingredient = input("Ingredient id you want to remove:'\n'")
+def remove_ingredient(cocktailId):
     
     ingredients_list = getIngredientsList()
     
     print(ingredients_list)
+    
+    ingredient = input("Ingredient id you want to remove:'\n'")
+    
        
-    url='http://127.0.0.1:5000/cocktails/delete-ingredient/{}'.format(ingredient)
+    url='http://127.0.0.1:5000/cocktails/{}/delete-ingredient/{}'.format(cocktailId,ingredient)
     result = requests.delete(url)
 
  #Verify if connection was succesful
@@ -249,20 +251,20 @@ def add_new_ingredients(cocktailId):
         print("there was an error adding your cocktail ingredients: ", result.status_code)
 
 def update_cocktail():
-   
-    cocktailId = input("Which cocktail  id would like to modify? :'\n'")
     
-     # get Cocktails List in here
+    # get Cocktails List in here
     cocktails_list = get_cocktails_list()
     print(cocktails_list)
-    
+   
+    cocktailId = input("Which cocktail  id would like to modify? :'\n'")
     add_modify = input("What would like to do with the ingredients add, modify or remove?:'\n'").lower
+    
     if add_modify == 'add':     
         add_new_ingredients(cocktailId)
     elif add_modify == 'modify':
-          modify_ingredient()
+          modify_ingredient(cocktailId)
     elif add_modify == 'remove':
-        remove_ingredient()
+        remove_ingredient(cocktailId)
 
 def  delete_cocktail():
       cocktailId = input("Which cocktail id would like to remove? :'\n'")

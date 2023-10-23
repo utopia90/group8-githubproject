@@ -75,7 +75,8 @@ def update_cocktail():
 
     #get cocktail ingredient details from body request json
     ingredient = request.get_json()
-    id=ingredient['id']
+    cocktailId=ingredient['cocktailId']
+    ingredientId = ingredient['ingredientId']
     unit=ingredient['unit']
     amount = ingredient['amount']
 
@@ -85,14 +86,14 @@ def update_cocktail():
       
     return {"message": "cocktail updated sucessfully!", "updated_cocktail_details: ":  ingredient}
 
-@app.route('/cocktails/delete-ingredient/<string:id>', methods=['DELETE'])
+@app.route('/cocktails/<string:cocktailid>/delete-ingredient/<string:ingredientid>', methods=['DELETE'])
 def delete_cocktail_ingredient(id):
 
     #Here we'll call a db_operations method that removes the cocktail ingredient in database 
     cocktail_was_removed = True
     
     if cocktail_was_removed:
-        return {"message": "cocktail with id {} was removed sucessfully!".format(id)}
+        return {"message": "cocktail ingredient with id {} was removed sucessfully!".format(id)}
     else:
         return {"message": "There was an error removing cocktail with id {}".format(id)}
 @app.route('/cocktails/delete-cocktail/<string:id>', methods=['DELETE'])
