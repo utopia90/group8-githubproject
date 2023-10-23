@@ -102,61 +102,33 @@ def get_cocktail_by_alcoholic_beverage(menu, user_selection):
             })
     return cocktails
 
-def get_cocktails_with_main_ingredients():
-    # Create an empty list to hold the cocktail details.
-    cocktails = []
+def get_all_ingredients(only_non_alcoholic=False):
+    ingredients = []
 
     try:
-        # Specify the database name.
         db_name = 'Cocktails'
-
-        # Connect to the database.
         db_connection = _connect_to_db(db_name)
         cur = db_connection.cursor()
 
-        # SQL Query:
-        # This query selects the cocktail name and its ingredients (both alcoholic and non-alcoholic).
-        # The ingredients are concatenated into a single string, separated by a comma.
-        query = """
-            SELECT 
-                c.CocktailName, 
-                GROUP_CONCAT(i.IngredientName ORDER BY i.IsAlcoholic DESC) AS MainIngredients
-            FROM 
-                CocktailsInfo c
-            JOIN 
-                CocktailIngredients ci ON c.Id = ci.CocktailId
-            JOIN 
-                Ingredients i ON ci.IngredientId = i.IngredientId
-            GROUP BY 
-                c.CocktailName
-            ORDER BY 
-                c.CocktailName;
-        """
+        if only_non_alcoholic:
+            query = "SELECT IngredientName FROM Ingredients WHERE IsAlcoholic = FALSE"
+        else:
+            query = "SELECT IngredientName FROM Ingredients"
 
-        # Execute the query.
         cur.execute(query)
-
-        # Fetch the data.
         rows = cur.fetchall()
 
-        # Loop through the returned rows and store the details in the 'cocktails' list.
         for row in rows:
-            cocktail_name, main_ingredients = row
-            cocktails.append({
-                "CocktailName": cocktail_name,
-                "MainIngredients": main_ingredients
-            })
+            ingredients.append(row[0])  # Assuming the IngredientName is the first column
 
     except Exception as e:
-        # If there's any exception, print the error message.
-        print("Failed to read data from DB:", str(e))
+        print("Failed to fetch ingredients from DB:", str(e))
     finally:
-        # Close the database connection.
         if db_connection:
             db_connection.close()
 
-    # Return the cocktails list.
-    return cocktails
+    return ingredients
+
 
 def add_cocktail(cocktail_name, calories, country_origin, ingredients, amounts, units):
     try:
@@ -281,10 +253,6 @@ def main():
             else:
                 print(f"No cocktails found with {user_selection}.")
                 
-            cocktails = get_cocktails_with_main_ingredients()
-            print("\nCocktails with Main Ingredients:")
-            for cocktail in cocktails:
-                print(f"CocktailName: {cocktail['CocktailName']}, MainIngredients: {cocktail['MainIngredients']}")
         else:
             print("Database connection failed")
 
