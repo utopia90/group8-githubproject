@@ -10,52 +10,6 @@
 import mysql.connector
 from config import HOST, USER, PASSWORD
 
-#a method that receives cocktailId, and ingredientId, and delete ingredient with id 
-#ingredienId if  links to cocktailid
-
-def delete_ingredient_for_cocktail(cocktail_id, ingredient_id):
-    
-
-    # Check if the ingredient is linked to the specified cocktail
-    cursor.execute("SELECT CocktailId FROM cocktailingredients WHERE CocktailId = %s 
-    AND ingredientId = %s", (cocktailid, ingredientid))
-    result = cursor.fetchone()
-
-    if result:
-        # Delete the link between the cocktail and ingredient
-        cursor.execute("DELETE FROM cocktailingredients WHERE cocktailid = %s 
-        AND ingredientid = %s", (cocktailid, ingredientid))
-        
-        #  to check if the ingredient is not linked to any other cocktails 
-        and delete it entirely from the ingredients table
-        cursor.execute("SELECT ingredient_id FROM cocktailingredients WHERE ingredientid = %s", (ingredientid,))
-        result = cursor.fetchone()
-        
-        if not result:
-            cursor.execute("DELETE FROM ingredients WHERE ingredientid = %s", (ingredientid,))
-        
-        # Commit the changes to the database
-        db.commit()
-    else:
-        print("Ingredient not linked to the specified cocktail.")
-
-    # Close the cursor and database connection when you're done
-    cursor.close()
-    db.close()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 # Define a function to connect to the database with the given name
 def _connect_to_db(db_name):
@@ -148,6 +102,39 @@ def get_cocktail_by_alcoholic_beverage(menu, user_selection):
                 "IngredientName": item["IngredientName"]
             })
     return cocktails
+
+def delete_ingredient_for_cocktail(cocktail_id, ingredient_id):
+    
+    try:
+        db_name = 'Cocktails'  # Replace with your database name
+        db_connection = _connect_to_db(db_name)
+        cursor = db_connection.cursor()
+    # Check if the ingredient is linked to the specified cocktail
+        cursor.execute("SELECT CocktailId FROM cocktailingredients WHERE CocktailId = %s AND ingredientId = %s", (cocktail_id, ingredient_id))
+        result = cursor.fetchone()
+
+        if result:
+        # Delete the link between the cocktail and ingredient
+         cursor.execute("DELETE FROM cocktailingredients WHERE cocktailid = %s AND ingredientid = %s", (cocktail_id, ingredient_id))
+        
+        #  to check if the ingredient is not linked to any other cocktails  and delete it entirely from the ingredients table
+        cursor.execute("SELECT ingredient_id FROM cocktailingredients WHERE ingredientid = %s", (ingredient_id,))
+        result = cursor.fetchone()
+        
+        if not result:
+            cursor.execute("DELETE FROM ingredients WHERE ingredientid = %s", (ingredient_id,))
+        
+        else:
+          print("Ingredient not linked to the specified cocktail.")
+
+    # Close the cursor and database connection when you're done
+    except Exception as e:
+        print("Failed to read data from DB:", str(e))
+        
+    finally:
+        if db_connection:
+            db_connection.close()
+
 
 
 
