@@ -10,7 +10,7 @@
 # Python Packages imports 
 from flask import Flask, jsonify, request
 # below additional import we will have to specify and uncomment in order to import the data and utils functions
-from question2_db_operations import get_all_cocktail_recipes, get_cocktail_by_id,get_cocktails_by_ingredient,get_cocktails_sorted_by_name_asc,post_new_cocktail,modify_ingredients,add_new_ingredient_to_cocktail, delete_ingredient_for_cocktail, delete_cocktail
+from question2_db_operations import get_all_cocktail_recipes, get_cocktail_by_id,get_cocktails_by_ingredient,get_cocktails_sorted_by_name_asc,post_new_cocktail,modify_ingredients,add_new_ingredient_to_cocktail, delete_ingredient_for_cocktail, delete_cocktail, get_all_ingredients
 # from utils import function1, function2 (we are going to rename the fuction according to the new name)
 from utils import format_result
 
@@ -26,16 +26,17 @@ def get_cocktails():
     return format_result(all_cocktails)
 
 # Retrieve all ingredients
-@app.route('/ingredients', methods=['GET'])
-def get_all_ingredients():
-    all_ingredients = "all ingredients", #call db method
-    return format_result(all_ingredients)
+@app.route('/cocktails/ingredients', methods=['GET'])
+def get_all_cocktail_ingredients():
+    all_ingredients = get_all_ingredients(), 
+    return jsonify(all_ingredients)
 
 # Retrieve all cocktails with the given ID from the database
 @app.route('/cocktails/<int:id>', methods=['GET'])
 def get_cocktail(id):
 
     cocktail_by_id = get_cocktail_by_id(id)
+    print(cocktail_by_id)
     return format_result([cocktail_by_id])
 
 @app.route('/cocktails/ingredients/<string:ingredient>', methods=['GET'])
