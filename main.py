@@ -9,12 +9,6 @@
 # Python Packages imports 
 
 
-""" TO BE MODIFIED AND CHECKED HERE: """
-""" Missing calling to DB functions
-    adding COMMENTS
-    check existing comments
-    TEST links """
-
 from db_utils import get_cocktails_by_ingredient, get_all_ingredients,get_ingredients_by_cocktailId
 import requests
 import json
@@ -67,7 +61,7 @@ def client_menu():
               break  # Exit the loop 
            
         print("Your drink will include the following ingredients: " + ", ".join(ingredients))
-        #funtion to save it in db?
+
     else:
         print("Choose a number from 1 to 4")
         client_menu()
@@ -83,7 +77,7 @@ def get_barman_recommendation():
 
 
 def login():
-    login_name = input("Welcome to the Code Queens Cocktail Bar. Please type if you are a bartender or a client: ")
+    login_name = input("Welcome to the Code Queens Cocktail Bar. Please type if you are a bartender or a client:\n ")
 
     if login_name == 'bartender':
         bartender_menu()
@@ -138,7 +132,7 @@ def add_ingredients():
     
     while new_ingredient:
         get_all_ingredients()
-        ingredient = input("Add a new ingredient.Select by id:\n")
+        ingredient = input("Add a new ingredient. Select by id:\n")
         #function to select ingredientId
         ingredients.append(ingredient)
 
