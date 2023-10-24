@@ -192,6 +192,31 @@ def add_ingredients_to_cocktail(cocktailId, ingredients, amounts, units):
         else:
                 print("there was an error adding your ingredients: ", result.status_code)
 
+    # PUT REQUEST
+""" def add_new_ingredients(cocktailId):
+    added_ingredients = add_ingredients()
+    ingredients = added_ingredients['ingredients']
+    amounts = added_ingredients['amounts']
+    units = added_ingredients['units']
+
+    updated_cocktail_ingredients = {
+        "id": cocktailId,
+        "ingredients": ingredients,
+        "amounts": amounts,
+        "units": units
+    }
+
+    url = "http://127.0.0.1:5000/cocktails/add-new-ingredients"
+    headers = {'content-type': 'application/json'}
+    result = requests.put(url, headers=headers, data=json.dumps(updated_cocktail_ingredients))
+
+    # Verify if connection was succesful
+    if result.status_code == 200:
+        print("cocktail ingredients added successfully!", result.json())
+
+    else:
+        print("there was an error adding your cocktail ingredients: ", result.status_code) """
+
 
 # data for cocktail recipe we want to update
 def update_cocktail():
@@ -302,8 +327,6 @@ def add_new_cocktail():
     else:
         print("there was an error adding your cocktail: ", result.status_code)
     
-    
-
 
 def get_cocktails_list():
     result = requests.get("http://127.0.0.1:5000/cocktails")
@@ -314,31 +337,6 @@ def get_cocktails_list():
     else:
         print("there was an error getting cocktails list: ", result.status_code)
 
-
-# PUT REQUEST
-def add_new_ingredients(cocktailId):
-    added_ingredients = add_ingredients()
-    ingredients = added_ingredients['ingredients']
-    amounts = added_ingredients['amounts']
-    units = added_ingredients['units']
-
-    updated_cocktail_ingredients = {
-        "id": cocktailId,
-        "ingredients": ingredients,
-        "amounts": amounts,
-        "units": units
-    }
-
-    url = "http://127.0.0.1:5000/cocktails/add-new-ingredients"
-    headers = {'content-type': 'application/json'}
-    result = requests.put(url, headers=headers, data=json.dumps(updated_cocktail_ingredients))
-
-    # Verify if connection was succesful
-    if result.status_code == 200:
-        print("cocktail ingredients added successfully!", result.json())
-
-    else:
-        print("there was an error adding your cocktail ingredients: ", result.status_code)
 
 
 def update_cocktail():
