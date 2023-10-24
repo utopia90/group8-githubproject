@@ -29,37 +29,103 @@ def _connect_to_db(db_name):
 class DbConnectionError(Exception):
     pass
 
-def delete_ingredient_for_cocktail(cocktail_id, ingredient_id):
-    
+# Define a function to get all cocktail recipes from the database
+def get_all_cocktail_recipes():
+    cocktail_menu = []  # Initialize an empty list to store cocktail data
     try:
-        db_name = 'Cocktails'  # Replace with your database name
-        db_connection = _connect_to_db(db_name)
-        cursor = db_connection.cursor()
-    # Check if the ingredient is linked to the specified cocktail
-        cursor.execute("SELECT CocktailId FROM cocktailingredients WHERE CocktailId = %s AND ingredientId = %s", (cocktail_id, ingredient_id))
-        result = cursor.fetchone()
+        db_name = 'Cocktails'  # Name of the database to connect to
+        db_connection = _connect_to_db(db_name)  # Establish a database connection
+        cur = db_connection.cursor()  # Create a cursor object for executing SQL queries
+        print("Connected to DB: %s" % db_name)  # Print a message indicating a successful connection
 
-        if result:
-        # Delete the link between the cocktail and ingredient
-         cursor.execute("DELETE FROM cocktailingredients WHERE cocktailid = %s AND ingredientid = %s", (cocktail_id, ingredient_id))
-        
-        #  to check if the ingredient is not linked to any other cocktails  and delete it entirely from the ingredients table
-        cursor.execute("SELECT ingredient_id FROM cocktailingredients WHERE ingredientid = %s", (ingredient_id,))
-        result = cursor.fetchone()
-        
-        if not result:
-            cursor.execute("DELETE FROM ingredients WHERE ingredientid = %s", (ingredient_id,))
-        
-        else:
-          print("Ingredient not linked to the specified cocktail.")
+        query = """
+        SELECT *
+        FROM CocktailsInfo
+        """
 
-    # Close the cursor and database connection when you're done
-    except Exception as e:
-        print("Failed to read data from DB:", str(e))
-        
+        cur.execute(query)  # Execute the SQL query to retrieve cocktail data
+
+        # Fetch all the data from the cursor and store it in cocktail_menu
+        cocktail_menu = cur.fetchall()
+
+        cur.close()  # Close the cursor
+
+        # You can now work with the fetched data if needed
+        return cocktail_menu
+
+    except Exception:
+        raise DbConnectionError("Failed to read data from DB")  # Raise a custom exception for database connection errors
+
     finally:
         if db_connection:
-            db_connection.close()
+            db_connection.close()  # Close the database connection
+            print("DB connection is closed")  # Print a message indicating a closed connection
+
+def get_cocktail_by_id(cocktail_id):
+    try:
+        # Establish a database connection
+        db_connection = _connect_to_db('YourDatabaseName')
+        cursor = db_connection.cursor()
+
+        # Execute an SQL query to fetch the cocktail by ID
+        query = "SELECT * FROM CocktailsName WHERE id = %s"
+        cursor.execute(query, (cocktail_id,))
+
+        # Fetch the data
+        cocktail_data = cursor.fetchone()
+
+        # Close the cursor and the connection
+        cursor.close()
+        db_connection.close()
+
+        return cocktail_data  # Return the cocktail data
+    except Exception as e:
+        raise DbConnectionError(f"Failed to fetch cocktail by ID: {str(e)}")
+
+
+def get_cocktails_by_ingredient(ingredient):
+    try:
+        # Establish a database connection
+        db_connection = _connect_to_db('YourDatabaseName')
+        cursor = db_connection.cursor()
+
+        # Execute an SQL query to fetch cocktails by ingredient
+        query = "SELECT * FROM CocktailsName WHERE ingredients LIKE %s"
+        cursor.execute(query, ("%" + ingredient + "%",))
+
+        # Fetch the data
+        cocktails_with_ingredient = cursor.fetchall()
+
+        # Close the cursor and the connection
+        cursor.close()
+        db_connection.close()
+
+        return cocktails_with_ingredient  # Return the cocktails that contain the ingredient
+    except Exception as e:
+        raise DbConnectionError(f"Failed to fetch cocktails by ingredient: {str(e)}")
+
+def get_cocktails_sorted_by_name_asc():
+    try:
+        # Establish a database connection
+        db_connection = _connect_to_db('YourDatabaseName')
+        cursor = db_connection.cursor()
+
+        # Execute an SQL query to fetch all cocktails and sort them by name in ascending order
+        query = "SELECT * FROM CocktailsName ORDER BY name ASC"
+        cursor.execute(query)
+
+        # Fetch the data
+        sorted_cocktails = cursor.fetchall()
+
+        # Close the cursor and the connection
+        cursor.close()
+        db_connection.close()
+
+        return sorted_cocktails  # Return the sorted cocktails
+    except Exception as e:
+        raise DbConnectionError(f"Failed to fetch sorted cocktails: {str(e)}")
+
+
             
 def add_new_ingredient_to_ingredients(ingredientName):
     try:
@@ -139,13 +205,13 @@ def modify_ingredients(cocktailId, ingredientId, unit, amount):
         if cursor.execute("SELECT CocktailId FROM CocktailIngredients WHERE CocktailId = %s AND IngredientId = %s", (cocktailId, ingredientId)):
         # modify unit and amount based on unit
             if unit == "ml":
-                cursor.execute("UPDATE CocktailIngredients SET AmountMl = %s WHERE ingredientId = %s", (ingredientId))
+                cursor.execute("UPDATE CocktailIngredients SET AmountMl = %s WHERE ingredientId = %s", (amount,ingredientId))
             elif unit == "gr":
-                cursor.execute("UPDATE CocktailIngredients SET WeightGr = %s WHERE ingredientId = %s", (ingredientId))
+                cursor.execute("UPDATE CocktailIngredients SET WeightGr = %s WHERE ingredientId = %s", (amount,ingredientId))
             elif unit=="tea spoons":
-                cursor.execute("UPDATE CocktailIngredients SET AmountTeaSpoons = %s WHERE ingredientId = %s", (ingredientId))
+                cursor.execute("UPDATE CocktailIngredients SET AmountTeaSpoons = %s WHERE ingredientId = %s", (amount,ingredientId))
             elif unit=="units":
-                cursor.execute("UPDATE CocktailIngredients SET AmountUnits = %s WHERE ingredientId = %s", (ingredientId))
+                cursor.execute("UPDATE CocktailIngredients SET AmountUnits = %s WHERE ingredientId = %s", (amount,ingredientId))
 
             db_connection.commit()
             print(f"Amount of ingredient with ID: {ingredientId} has been modified for cocktail with ID: {cocktailId}")
@@ -156,6 +222,7 @@ def modify_ingredients(cocktailId, ingredientId, unit, amount):
         print("Failed to modify ingredient:", str(e))
      finally:
         if db_connection:
+            print("Cocktail with ID: {} updated successfully!".format(cocktailId))
             cursor.close()
             db_connection.close()
     
@@ -290,18 +357,18 @@ def delete_ingredient_for_cocktail(cocktail_id, ingredient_id):
 
 
 
-def post_new_cocktail(cocktail_name, ingredients, amounts, units):
+def post_new_cocktail(cocktail_name,country,calories, ingredients, amounts, units):
     try:
         db_name = 'Cocktails'
         db_connection = _connect_to_db(db_name)
         cur = db_connection.cursor()
-
+        
         # Insert into CocktailsInfo
         insert_query_cocktail_info = """
-            INSERT INTO CocktailsInfo (CocktailName, Calories, CountryOrigin, Alcoholic)
+            INSERT INTO CocktailsInfo (CocktailName,Calories,CountryOrigin,Alcoholic)
             VALUES (%s,%s,%s,%s)
         """
-        cur.execute(insert_query_cocktail_info, (cocktail_name, None, None, True))
+        cur.execute(insert_query_cocktail_info, (cocktail_name, calories, country, True))
 
         cocktail_id = cur.lastrowid  # Get the last inserted cocktail ID
 
@@ -310,23 +377,78 @@ def post_new_cocktail(cocktail_name, ingredients, amounts, units):
             ingredient_id_query = "SELECT IngredientId FROM Ingredients WHERE IngredientId = %s"
             cur.execute(ingredient_id_query, (ingredientId,))
             ingredient_id = cur.fetchone()[0]
-            print(ingredient_id)
-            insert_query_cocktail_ingredients = """
+       
+            
+            if units[idx] == "ml":
+                insert_query_cocktail_ingredients = """
                 INSERT INTO CocktailIngredients (CocktailId, IngredientId, AmountMl, AmountTeaSpoons, AmountUnits, WeightGr)
                 VALUES (%s, %s, %s, %s, %s, %s)
             """
-            cur.execute(insert_query_cocktail_ingredients, (cocktail_id, ingredient_id, amounts[idx], None, units[idx], None))
+                cur.execute(insert_query_cocktail_ingredients,  (cocktail_id, ingredient_id, amounts[idx], None, None, None))
+            elif units[idx] == "gr":
+                 insert_query_cocktail_ingredients = """
+                INSERT INTO CocktailIngredients (CocktailId, IngredientId, AmountMl, AmountTeaSpoons, AmountUnits, WeightGr)
+                VALUES (%s, %s, %s, %s, %s, %s)
+            """
+                 cur.execute(insert_query_cocktail_ingredients,  (cocktail_id, ingredient_id, None, None, None,  amounts[idx]))
+            elif units[idx]=="tea spoons":
+                 insert_query_cocktail_ingredients = """
+                INSERT INTO CocktailIngredients (CocktailId, IngredientId, AmountMl, AmountTeaSpoons, AmountUnits, WeightGr)
+                VALUES (%s, %s, %s, %s, %s, %s)
+            """
+                 cur.execute(insert_query_cocktail_ingredients,  (cocktail_id, ingredient_id, None, amounts[idx], None,  None))
+            elif units[idx]=="units":
+                insert_query_cocktail_ingredients = """
+                INSERT INTO CocktailIngredients (CocktailId, IngredientId, AmountMl, AmountTeaSpoons, AmountUnits, WeightGr)
+                VALUES (%s, %s, %s, %s, %s, %s)
+            """
+                cur.execute(insert_query_cocktail_ingredients,  (cocktail_id, ingredient_id, None, None, amounts[idx],  None))
+          
 
 
         db_connection.commit()
-        
+        return 'Cocktail with name {} was added successfully!'.format(cocktail_name)
+
     except Exception as e:
-        print("Failed to add cocktail to DB:", str(e))
+        return "Failed to add cocktail to DB:", str(e)
     finally:
-        print('Cocktail with name {} was added successfully!'.format(cocktail_name))
         if db_connection:
             db_connection.close()
 # Define the main function, the entry point of the program
+
+def delete_cocktail(cocktail_id):
+    try:
+        db_name = 'Cocktails'
+        db_connection = _connect_to_db(db_name)
+        cur = db_connection.cursor()
+
+        # Archive the ingredients of the cocktail
+        archive_query = """
+            INSERT INTO RecipesArchive (CocktailName, IngredientId, AmountMl, AmountTeaSpoons, AmountUnits, WeightGr)
+            SELECT c.CocktailName, ci.IngredientId, ci.AmountMl, ci.AmountTeaSpoons, ci.AmountUnits, ci.WeightGr
+            FROM CocktailsInfo c
+            INNER JOIN CocktailIngredients ci ON c.Id = ci.CocktailId
+            WHERE c.Id = %s
+        """
+        cur.execute(archive_query, (cocktail_id,))
+
+        # Delete the cocktail from CocktailIngredients and CocktailsInfo tables
+        delete_cocktail_ingredients_query = "DELETE FROM CocktailIngredients WHERE CocktailId = %s"
+        cur.execute(delete_cocktail_ingredients_query, (cocktail_id,))
+
+        delete_cocktail_info_query = "DELETE FROM CocktailsInfo WHERE Id = %s"
+        cur.execute(delete_cocktail_info_query, (cocktail_id,))
+        
+        db_connection.commit()
+        print("Cocktail with id {} removed successfully!".format(cocktail_id))
+
+    except Exception as e:
+        print("Failed to delete cocktail:", str(e))
+    finally:
+        if db_connection:
+            db_connection.close()
+            
+
 def main():
     try:
         # Connect to the 'Cocktails' database
