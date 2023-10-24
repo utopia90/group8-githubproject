@@ -137,6 +137,7 @@ def add_ingredients():
     new_ingredient = True
     
     while new_ingredient:
+        get_all_ingredients()
         ingredient = input("Add a new ingredient.Select by id:\n")
         #function to select ingredientId
         ingredients.append(ingredient)

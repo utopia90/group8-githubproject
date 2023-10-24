@@ -506,8 +506,6 @@ def main():
                 else:
                     print("No Ingredient")
 
-            delete_cocktail_by_id(1)
-
             user_selection = "White Rum"  # Replace with the user's selection
             selected_cocktails = get_cocktail_by_alcoholic_beverage(menu, user_selection)
 
