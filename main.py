@@ -69,7 +69,7 @@ def client_menu():
 
 
 def get_barman_recommendation():
-    all_cocktails = get_cocktails_list()
+    all_cocktails = get_menu()
     max = len(all_cocktails) - 1
     randomId = randint(0, max)
     recommendation = all_cocktails[randomId]
@@ -154,7 +154,7 @@ def add_ingredients():
 
 # data for cocktail recipe we want to update
 def update_cocktail():
-    cocktail_list = get_cocktails_list()
+    cocktail_list = get_menu()
     print(cocktail_list, sep =", ")
     CocktailId = input("Write the Id of the cocktail recipe would like to modify:\n")
     

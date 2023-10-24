@@ -11,7 +11,7 @@
 from flask import Flask, jsonify, request
 # below additional import we will have to specify and uncomment in order to import the data and utils functions
 from db_utils import get_all_cocktail_recipes, get_cocktail_by_id,get_cocktails_by_ingredient,get_cocktails_sorted_by_name_asc,post_new_cocktail,modify_ingredients,add_new_ingredient_to_cocktail, delete_ingredient_for_cocktail, delete_cocktail, get_all_ingredients
-# from utils import function1, function2 (we are going to rename the fuction according to the new name)
+# from utils import function1, function2 (we are going to rename the function according to the new name)
 from utils import format_result
 
 
