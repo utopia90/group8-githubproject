@@ -8,6 +8,13 @@
 #  =========================================================================
 # Python Packages imports 
 
+
+""" TO BE MODIFIED AND CHECKED HERE: """
+""" Missing calling to DB functions
+    adding COMMENTS
+    check existing comments
+    TEST links """
+
 from question2_db_operations # import
 import requests
 import json
