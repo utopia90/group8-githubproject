@@ -87,7 +87,6 @@ def get_cocktail_by_id(cocktail_id):
         if db_connection:
             db_connection.close()  # Close the database connection
 
-get_cocktail_by_id(2)
 def get_cocktails_by_ingredient(ingredient):
     try:
         cocktails_with_ingredient  = []  # Initialize an empty list to store cocktail data
