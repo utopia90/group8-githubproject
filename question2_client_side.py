@@ -185,7 +185,7 @@ def modify_ingredient(cocktailId):
     unit = input("Select the measure unit (ml, gr, tea spoons or unites):\n")
     amount = float(input("Insert in the amount in {}:'\n'".format(unit)))
 
-    url = "http://127.0.0.1:5000/cocktails/update-cocktail-ingredient"
+    url = "http://127.0.0.1:5000/cocktails/update-cocktail-ingredient-amount"
     headers = {'content-type': 'application/json'}
 
     updated_ingredient = {
@@ -198,10 +198,10 @@ def modify_ingredient(cocktailId):
 
     # Verify if connection was succesful
     if result.status_code == 200:
-        print("cocktail ingredient modified successfully!", result.json())
+        print("cocktail ingredient modified successfully!", result.text)
 
     else:
-        print("there was an error modifying your cocktail ingredient: ", result.status_code)
+        print("there was an error modifying your cocktail ingredient: ", result)
 
 
 def remove_ingredient(cocktailId):
