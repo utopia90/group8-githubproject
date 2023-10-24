@@ -46,22 +46,25 @@ Modify a Cocktail's Recipe.
 
 ![Code Queens Cocktail Bar - Client Side Flow Demo 3](https://github.com/AmyLouiseSnelling/CFGdatacourse/blob/main/client_side_demo3_V2.gif)
 
-🚀 Running the Code
-Make sure Python 3.11.3 is installed.
-Set up a virtual environment:
-Copy code
-python -m venv myenv
-Activate the virtual environment:
-Windows: myenv\Scripts\activate
-macOS and Linux: source myenv/bin/activate
-Install necessary Python packages:
-Copy code
-pip install -r requirements.txt
-Navigate to the project directory and, if needed, modify the configuration file.
-Launch the Flask application:
-Copy code
-python app.py
-Now, immerse yourself in the Code Queens Cocktail Bar's web interface, catered for both bartenders and clients, allowing interaction with the cocktail menu, creation of new recipes, and enjoyment of delightful concoctions.
 
+<h2>🚀 Running the Code</h2><br>
+
+1. Ensure you have Python 3.11.3 installed.
+2. Create a virtual environment for your project.
+python -m venv myenv
+3. Activate the virtual environment.
+- On Windows:
+myenv\Scripts\activate
+- On macOS and Linux:
+source myenv/bin/activate
+4. Install required Python packages using pip.
+pip install -r requirements.txt
+### Run the Code
+1. Navigate to the project directory.
+2. Edit the configuration file if necessary.
+3. Start the Flask web application.
+4. Copy code: python app.py
+
+Now, immerse yourself in the Code Queens Cocktail Bar's web interface, catered for both bartenders and clients, allowing interaction with the cocktail menu, creation of new recipes, and enjoyment of delightful concoctions.
 
 <h2 align="center"> Cheers to a spectacular cocktail journey with the Code Queens Cocktail Bar! 🍹🍸</h2>
