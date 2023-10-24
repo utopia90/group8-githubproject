@@ -9,7 +9,7 @@
 # Python Packages imports 
 
 
-from db_utils import get_cocktails_by_ingredient, get_all_ingredients,get_ingredients_by_cocktailId
+from db_utils import get_cocktails_by_ingredient, get_all_ingredients,get_ingredients_by_cocktailId, get_menu
 import requests
 import json
 from random import randint
@@ -27,7 +27,7 @@ def client_menu():
 
     if select_choice == '1':
         print("Here is the menu.")
-        all_cocktails = get_cocktails_list()
+        all_cocktails = get_menu()
         print(all_cocktails) 
         drink_choice= input("Type the name of the cocktail here:  ")
         print("You are having a " + drink_choice + ". Enjoy your drink.")
