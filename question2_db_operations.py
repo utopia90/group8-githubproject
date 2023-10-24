@@ -15,13 +15,14 @@ from config import HOST, USER, PASSWORD
 def _connect_to_db(db_name):
     # Establish a connection to the database using the provided parameters (host, user, password, auth_plugin, and database name)
     cnx = mysql.connector.connect(
-        host=HOST,        # The hostname of the database server
-        user=USER,        # The username for database access
+        host=HOST,  # The hostname of the database server
+        user=USER,  # The username for database access
         password=PASSWORD,  # The password for database access
         auth_plugin='mysql_native_password',  # The authentication plugin to use
         database=db_name  # The name of the specific database to connect to
     )
     return cnx  # Return the established database connection
+
 
 
 # Define a custom exception class for handling database connection errors
@@ -213,6 +214,7 @@ def get_menu():
 
     return menu
 
+
 def get_alcoholic_ingredients(menu):
     alcoholic_ingredients = set()  # Use a set to store unique values
 
@@ -221,6 +223,26 @@ def get_alcoholic_ingredients(menu):
             alcoholic_ingredients.add(item["AlcoholicBeverage"])
 
     return list(alcoholic_ingredients)  # Convert the set back to a list
+
+
+def get_not_alcoholic_ingredients(menu):
+    not_alcoholic_ingredients = set()  # Use a set to store unique values
+
+    for item in menu:
+        if item["AlcoholicBeverage"] is None and item["IngredientName"]:
+            not_alcoholic_ingredients.add(item["IngredientName"])
+
+    return list(not_alcoholic_ingredients)  # Convert the set back to a list
+
+
+def get_all_ingredients(menu):
+    all_ingredients = set()  # Use a set to store unique values
+
+    for item in menu:
+        if item["AlcoholicBeverage"] is not None and item["IngredientName"]:
+            all_ingredients.add(item["IngredientName"])
+    return list(all_ingredients)  # Convert the set back to a list
+
 
 def get_cocktail_by_alcoholic_beverage(menu, user_selection):
     cocktails = []
@@ -281,13 +303,31 @@ def main():
                 print(
                     f"CocktailId: {item['CocktailId']}, CocktailName: {item['CocktailName']}, AlcoholicBeverage: {item['AlcoholicBeverage']}, IngredientName: {item['IngredientName']}")
 
-            alcoholic_ingredients = get_alcoholic_ingredients(menu)  # Call the function with the menu
+            alcoholic_ingredients = get_alcoholic_ingredients(menu)
             if alcoholic_ingredients:
                 print("Alcoholic beverages:")
                 for beverage in alcoholic_ingredients:
                     print(f"Alcoholic Beverage: {beverage}")
             else:
-                print("The Alcoholic beverages ingredients found in the menu are:")
+                print("No alcoholic beverages found in the menu.")
+
+            not_alcoholic_ingredients = get_not_alcoholic_ingredients(menu)
+            if not_alcoholic_ingredients:
+                print("Non-alcoholic ingredients:")
+                for ingredient in not_alcoholic_ingredients:
+                    print(f"Ingredient: {ingredient}")
+            else:
+                print("No non-alcoholic ingredients found in the menu.")
+
+            all_ingredients = get_all_ingredients(menu)
+            if all_ingredients:
+                print("All ingredients")
+                for ingredient in all_ingredients:
+                    print(f"Ingredient: {ingredient}")
+                else:
+                    print("No Ingredient")
+
+            delete_cocktail_by_id(1)
 
             user_selection = "White Rum"  # Replace with the user's selection
             selected_cocktails = get_cocktail_by_alcoholic_beverage(menu, user_selection)
@@ -308,4 +348,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
