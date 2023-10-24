@@ -193,7 +193,7 @@ def add_ingredients_to_cocktail(cocktailId, ingredients, amounts, units):
                 print("there was an error adding your ingredients: ", result.status_code)
 
     # PUT REQUEST
-""" def add_new_ingredients(cocktailId):
+def add_new_ingredients(cocktailId):
     added_ingredients = add_ingredients()
     ingredients = added_ingredients['ingredients']
     amounts = added_ingredients['amounts']
@@ -215,7 +215,7 @@ def add_ingredients_to_cocktail(cocktailId, ingredients, amounts, units):
         print("cocktail ingredients added successfully!", result.json())
 
     else:
-        print("there was an error adding your cocktail ingredients: ", result.status_code) """
+        print("there was an error adding your cocktail ingredients: ", result.status_code)
 
 
 # data for cocktail recipe we want to update
@@ -344,7 +344,7 @@ def update_cocktail():
     cocktails_list = get_cocktails_list()
     print(cocktails_list)
 
-    cocktailId = input("Which cocktail  id would like to modify? :\n")
+    cocktailId = input("Which cocktail id would like to modify? :\n")
     add_modify = input("What would like to do with the ingredients add, modify or remove?:\n").lower
 
     if add_modify == 'add':
