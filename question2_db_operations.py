@@ -59,7 +59,6 @@ def get_all_cocktail_recipes():
     finally:
         if db_connection:
             db_connection.close()  # Close the database connection
-            print("DB connection is closed")  # Print a message indicating a closed connection
 
 
 def get_cocktail_by_id(cocktail_id):
@@ -79,7 +78,6 @@ def get_cocktail_by_id(cocktail_id):
         # Close the cursor and the connection
         cursor.close()
         db_connection.close()
-        print("cocktailll",cocktail_data)
         return cocktail_data
        
     except Exception:
@@ -88,7 +86,6 @@ def get_cocktail_by_id(cocktail_id):
     finally:
         if db_connection:
             db_connection.close()  # Close the database connection
-            print("DB connection is closed")  # Print a message indicating a closed connection
 
 get_cocktail_by_id(2)
 def get_cocktails_by_ingredient(ingredient):
