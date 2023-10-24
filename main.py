@@ -15,7 +15,7 @@
     check existing comments
     TEST links """
 
-from question2_db_operations import get_cocktails_by_ingredient, get_all_ingredients,get_ingredients_by_cocktailId
+from db_utils import get_cocktails_by_ingredient, get_all_ingredients,get_ingredients_by_cocktailId
 import requests
 import json
 from random import randint
