@@ -49,7 +49,7 @@ def client_menu():
         for ingredient in ingredient_list.capitalize():
             print("{}, ".format(ingredient))
         chosen_ingredient = input("What ingredient would you like in your drink?:\n")
-        cocktail = get_cocktail_by_ingredient(chosen_ingredient)
+        cocktail = get_cocktail_by_ingredient(chosen_ingredient) # this need to be checked
         # return full recipe for the client to see (print)
         print("Your cocktail name is: {}.".format(cocktail['CocktailName']))
         for cocktail_ingredient in cocktail[ingredients]: # checking how this list/dictionary returns
@@ -78,10 +78,10 @@ def client_menu():
 
 
 def get_barman_recommendation():
-    all_cocktails = get_menu()
+    all_cocktails = get_cocktails_list()
     max = len(all_cocktails) - 1
     randomId = randint(0, max)
-    recommendation = get_cocktail_by_id(randomId)
+    recommendation = all_cocktails[randomId]
     print("This is what our bartender would recommend:\nThis cocktail is called: {}, originated in {} and contains {} calories.".format(recommendation['CocktailName'], recommendation['Country'], recommendation['Calories']))
 
 
@@ -119,6 +119,7 @@ def bartender_menu():
         print("You didn't enter a valid password")
     # if after the loop a valid password was not submitted the function ends
         return
+    # next, we ask our bartender what to do
     chosen_update = ""
     # a different function will be called upon selection
     while chosen_update not in ['add', 'remove', 'modify']:
@@ -129,6 +130,7 @@ def bartender_menu():
         delete_cocktail()
     elif chosen_update == 'modify':
         update_cocktail()
+
 
 
 def add_ingredients(cocktailId):
@@ -156,6 +158,9 @@ def add_ingredients(cocktailId):
 
     add_ingredients_to_cocktail(cocktailId, ingredients, amounts, units)
 
+def getIngredientsList():
+    url = "http://127.0.0.1:5000/cocktails/ingredients"
+    result = requests.get(url)
 
 # a method that receive cocktailid,ingredientid,unit,and amount and modify unit, amount of ingredientid if is link to cocktailid
 def modify_cocktail(cocktailId, ingredientId, unit, amount):
@@ -361,6 +366,15 @@ def update_cocktail():
     elif add_modify == 'remove':
         remove_ingredient(cocktailId)
 
+def  delete_cocktail():
+     # get Cocktails List in here
+      cocktails_list = get_cocktails_list()
+      print(cocktails_list)
+      
+      cocktailId = input("Which cocktail id would like to remove? :'\n'")
+    
+      # Send DELETE request
+      url = 'http://127.0.0.1:5000/cocktails/delete-cocktail/{}'.format(cocktailId)
 
 def delete_cocktail():
     # get Cocktails List in here
