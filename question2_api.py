@@ -94,7 +94,7 @@ def add_cocktail_ingredients():
 
     #call db method to add new ingredients
     
-    add_new_ingredients =  add_new_ingredient_to_cocktail(cocktailId,ingredients,amounts,  units)
+    add_new_ingredients =  add_new_ingredient_to_cocktail(cocktailId,ingredients,amounts,units)
       
     return add_new_ingredients 
 
@@ -108,9 +108,7 @@ def delete_cocktail_ingredient(cocktailid, ingredientid):
                                                      
                                         
 @app.route('/cocktails/delete-cocktail/<string:id>', methods=['DELETE'])
-def delete_cocktail(id):
-
-    
+def delete_cocktail_by_id(id):
     #Here we'll call a db_operations method that removes the cocktail in database 
     remove_cocktail = delete_cocktail(id)
     

@@ -15,7 +15,7 @@
     check existing comments
     TEST links """
 
-from question2_db_operations import get_cocktails_by_ingredient, get_alcoholic_ingredients, get_not_alcoholic_ingredients, get_all_ingredients
+from question2_db_operations import get_cocktails_by_ingredient, get_all_ingredients,get_ingredients_by_cocktailId
 import requests
 import json
 from random import randint
@@ -29,31 +29,28 @@ def another_drink():
 
 
 def client_menu():
-    select_choice = input("Select 1: Pick a drink from the menu\nSelect 2: Barman recommendation\nSelect 3: Pick your drink by liquor ingredient\nSelect 4: Make your own drink\n")
+    select_choice = input("Select 1: Pick a drink from the menu\nSelect 2: Barman recommendation\nSelect 3: Pick your drink by ingredient\nSelect 4: Make your own drink\n")
 
     if select_choice == '1':
         print("Here is the menu.")
         all_cocktails = get_cocktails_list()
         print(all_cocktails) 
         drink_choice= input("Type the name of the cocktail here:  ")
-        print("You are having a" + drink_choice + ". Enjoy your drink.")
+        print("You are having a " + drink_choice + ". Enjoy your drink.")
         
     elif select_choice == '2':
         get_barman_recommendation()
     elif select_choice == '3':
-        isAlcoholic = input("Do you want your drink to contains alcohol?:\n").lower()
-        if isAlcoholic == 'yes':
-            ingredient_list = get_alcoholic_ingredients()
-        else:
-            ingredient_list = get_not_alcoholic_ingredients()
-        for ingredient in ingredient_list.capitalize():
+       
+        ingredient_list = get_all_ingredients(only_non_alcoholic=True)
+        for ingredient in ingredient_list:
             print("{}, ".format(ingredient))
         chosen_ingredient = input("What ingredient would you like in your drink?:\n")
-        cocktail = get_cocktails_by_ingredient(chosen_ingredient) # this need to be checked
+        cocktail = get_cocktails_by_ingredient(chosen_ingredient)
+        print(cocktail)
         # return full recipe for the client to see (print)
-        print("Your cocktail name is: {}.".format(cocktail['CocktailName']))
-        for cocktail_ingredient in cocktail[ingredients]: # checking how this list/dictionary returns
-            print("{}\ ".format(cocktail_ingredient.capitalize()))
+        print("Your cocktail name is: {}.".format(cocktail[0][1]))
+
 
     elif select_choice == '4':
         print("Let's go on a cocktail adventure. ")
@@ -61,7 +58,7 @@ def client_menu():
         print(ingredient_list, sep=", ")
         ingredients = []
         while True:  # The loop will continue until the customer decides not to add more ingredients
-           ingredient = input("What ingredient would you like in your drink? ")
+           ingredient = input("What ingredient id would you like in your drink? ")
            ingredients.append(ingredient)  
 
            another_ingredient = input("Would you like any other ingredients? (yes/no) ")
@@ -82,7 +79,7 @@ def get_barman_recommendation():
     max = len(all_cocktails) - 1
     randomId = randint(0, max)
     recommendation = all_cocktails[randomId]
-    print("This is what our bartender would recommend:\nThis cocktail is called: {}, originated in {} and contains {} calories.".format(recommendation['CocktailName'], recommendation['Country'], recommendation['Calories']))
+    print("This is what our bartender would recommend:\nThis cocktail is called: {}, originated in {} and contains {} calories.".format(recommendation['name'], recommendation['country_origin'], recommendation['calories']))
 
 
 def login():
@@ -160,30 +157,6 @@ def add_ingredients():
     return {"ingredients": ingredients, "amounts": amounts, "units": units}
 
 
-# a method that receive cocktailid,ingredientid,unit,and amount and modify unit, amount of ingredientid if is link to cocktailid
-def modify_cocktail(cocktailId, ingredientId, unit, amount):
-    ingredient = get_ingredient_by_id(ingredientId) ## create if not there or check or remove
-    if cocktailId == ingredient['cocktailId']:
-        ingredient['unit'] = unit
-        ingredient['amount'] = amount
-
-    url = "http://127.0.0.1:5000/cocktails/ingredients"
-    headers = {'content-type': 'application/json'}
-
-    result = requests.patch(url, headers=headers, data=json.dumps(ingredient))
-
-    # Verify if connection was succesful
-    if result.status_code == 200:
-        print("cocktail added successfully!", result.json())
-
-    else:
-        print("there was an error adding your cocktail: ", result.status_code)
-
-
-
-
-
-
 # data for cocktail recipe we want to update
 def update_cocktail():
     cocktail_list = get_cocktails_list()
@@ -193,7 +166,7 @@ def update_cocktail():
     if CocktailId not in cocktail_list:
           print("That recipe is not in our database")
     else:
-        add_modify = input("What would like to do: add, modify or remove a cokctail?:\n").lower()
+        add_modify = input("What would like to do: add, modify or remove a cokctail?:\n")
         if add_modify == 'add':
             print("ok, lets add ingredients to cocktail with id {}".format(CocktailId))
             add_ingredients(CocktailId)
@@ -203,9 +176,8 @@ def update_cocktail():
             remove_ingredient(CocktailId)
 
 
-
 def modify_ingredient(cocktailId):
-    ingredients_list = get_in
+    ingredients_list = get_all_ingredients()
     print(ingredients_list)
     ingredient = input("Ingredient Id you want to modify:\n")
 
@@ -232,21 +204,20 @@ def modify_ingredient(cocktailId):
 
 
 def remove_ingredient(cocktailId):
-    ingredients_list = get_cocktails_list()
-
+    ingredients_list = get_ingredients_by_cocktailId(cocktailId)
     print(ingredients_list)
-
     ingredient = input("Ingredient id you want to remove:\n")
+    
 
     url = 'http://127.0.0.1:5000/cocktails/{}/delete-ingredient/{}'.format(cocktailId, ingredient)
     result = requests.delete(url)
 
     # Verify if connection was succesful
     if result.status_code == 200:
-        print("ingredient removed successfully!", result.json())
+        print(result.text)
 
     else:
-        print("there was an error removing ingredient: ", result.status_code)
+        print("there was an error removing ingredient: ", result.text)
 
 
 # POST REQUEST
@@ -279,13 +250,37 @@ def add_new_cocktail():
        
     else:
         print("there was an error adding your cocktail: ", result.status_code, result.text)
-    
+        
+def add_ingredients_to_cocktail(cocktailId):
+        added_ingredients = add_ingredients()
+        ingredients = added_ingredients['ingredients']
+        amounts = added_ingredients['amounts']
+        units = added_ingredients['units']
+        new_cocktail_ingredients = {
+            "cocktailId": cocktailId,
+            "ingredients": ingredients,
+            "amounts": amounts,
+            "units": units
+        }
+        url = "http://127.0.0.1:5000/cocktails/add-new-ingredients"
+        headers = {'content-type': 'application/json'}
+
+        result = requests.put(url, headers=headers, data=json.dumps(new_cocktail_ingredients))
+
+        # Verify if connection was succesful
+        if result.status_code == 200:
+            print(result.text)
+
+        else:
+                print("there was an error adding your ingredients: ", result.status_code, result.text)    
 
 def get_cocktails_list():
     result = requests.get("http://127.0.0.1:5000/cocktails")
     # Verify if connection was succesful
     if result.status_code == 200:
         print(result.json())
+        return result.json()
+    
 
     else:
         print("there was an error getting cocktails list: ", result.status_code)
@@ -298,10 +293,11 @@ def update_cocktail():
     print(cocktails_list)
 
     cocktailId = input("Which cocktail id would like to modify? :\n")
-    add_modify = input("What would like to do with the ingredients add, modify or remove?:\n").lower
+    add_modify = input("What would like to do with the ingredients add, modify or remove?:\n")
 
     if add_modify == 'add':
-        add_new_ingredients(cocktailId)
+        print("Ok, lets add ingredients to the cocktail!")
+        add_ingredients_to_cocktail(cocktailId)
     elif add_modify == 'modify':
         modify_ingredient(cocktailId)
     elif add_modify == 'remove':
@@ -322,9 +318,9 @@ def delete_cocktail():
 
     # Verify if connection was succesful
     if result.status_code == 200:
-        print("cocktail with id {} removed successfully!".format(cocktailId), result.json())
+        print(result.text)
     else:
-        print("there was an error", result.status_code)
+        print("there was an error", result.text)
 
 
 def run():
