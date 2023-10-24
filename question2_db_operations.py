@@ -192,25 +192,22 @@ def modify_ingredients(cocktailId, ingredientId, unit, amount):
         db_connection = _connect_to_db(db_name)
         cursor = db_connection.cursor()
 
-        # check if is linked to cocktail
-        if cursor.execute("SELECT CocktailId FROM CocktailIngredients WHERE CocktailId = %s AND IngredientId = %s", (cocktailId, ingredientId)):
         # modify unit and amount based on unit
-            if unit == "ml":
+        if unit == "ml":
                 cursor.execute("UPDATE CocktailIngredients SET AmountMl = %s WHERE ingredientId = %s", (amount,ingredientId))
-            elif unit == "gr":
+        elif unit == "gr":
                 cursor.execute("UPDATE CocktailIngredients SET WeightGr = %s WHERE ingredientId = %s", (amount,ingredientId))
-            elif unit=="tea spoons":
+        elif unit=="tea spoons":
                 cursor.execute("UPDATE CocktailIngredients SET AmountTeaSpoons = %s WHERE ingredientId = %s", (amount,ingredientId))
-            elif unit=="units":
+        elif unit=="units":
                 cursor.execute("UPDATE CocktailIngredients SET AmountUnits = %s WHERE ingredientId = %s", (amount,ingredientId))
 
-            db_connection.commit()
-            print(f"Amount of ingredient with ID: {ingredientId} has been modified for cocktail with ID: {cocktailId}")
-        else:
-            print(f"Ingredient with ID: {ingredientId} is not in recipe for cocktail with ID: {cocktailId}")
+        db_connection.commit()
+        return "Amount of ingredient has been modified"
+
 
      except Exception as e:
-        print("Failed to modify ingredient:", str(e))
+        return "Failed to modify ingredient:", str(e)
      finally:
         if db_connection:
             print("Cocktail with ID: {} updated successfully!".format(cocktailId))
