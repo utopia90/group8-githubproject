@@ -348,8 +348,7 @@ def delete_ingredient_for_cocktail(cocktail_id, ingredient_id):
         cursor = db_connection.cursor()
    
        
-        cursor.execute("DELETE FROM CocktailIngredients WHERE IngredientId =%s", (ingredient_id,))
-        cursor.execute("DELETE FROM Ingredients WHERE IngredientId =%s", (ingredient_id,))
+        cursor.execute("DELETE FROM CocktailIngredients WHERE IngredientId =%s AND CocktailId =%s", (ingredient_id, cocktail_id))
 
 
         

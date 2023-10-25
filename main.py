@@ -173,10 +173,10 @@ def update_cocktail():
 
 def modify_ingredient(cocktailId):
     ingredients_list = get_ingredients_by_cocktailId(cocktailId)
-    if(len(ingredients_list) > 0):
-       print(ingredients_list)
+    if len(ingredients_list) > 0:
+        print(ingredients_list)
     else:
-        print("sorry! we do not have ingredients associated with this cocktail! Try again")
+        print('sorry, we do not have ingredients associated with this cocktail! Try again!')
         update_cocktail()
         
     ingredient = input("Ingredient Id you want to modify:\n")
@@ -205,7 +205,13 @@ def modify_ingredient(cocktailId):
 
 def remove_ingredient(cocktailId):
     ingredients_list = get_ingredients_by_cocktailId(cocktailId)
-    print(ingredients_list)
+    
+    if len(ingredients_list) > 0:
+        print(ingredients_list)
+    else:
+        print('sorry, we do not have ingredients associated with this cocktail! Try again!')
+        update_cocktail()
+        
     ingredient = input("Ingredient id you want to remove:\n")
     
 
