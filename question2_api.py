@@ -10,8 +10,8 @@
 # Python Packages imports 
 from flask import Flask, jsonify, request
 # below additional import we will have to specify and uncomment in order to import the data and utils functions
-from question2_db_operations import get_all_cocktail_recipes, get_cocktail_by_id,get_cocktails_by_ingredient,get_cocktails_sorted_by_name_asc
-# from utils import function1, function2 (we are going to rename the fuction according to the new name)
+from db_utils import get_all_cocktail_recipes, get_cocktail_by_id,get_cocktails_by_ingredient,get_cocktails_sorted_by_name_asc,post_new_cocktail,modify_ingredients,add_new_ingredient_to_cocktail, delete_ingredient_for_cocktail, delete_cocktail, get_all_ingredients
+# from utils import function1, function2 (we are going to rename the function according to the new name)
 from utils import format_result
 
 
@@ -25,11 +25,18 @@ def get_cocktails():
     all_cocktails = get_all_cocktail_recipes()
     return format_result(all_cocktails)
 
+# Retrieve all ingredients
+@app.route('/cocktails/ingredients', methods=['GET'])
+def get_all_cocktail_ingredients():
+    all_ingredients = get_all_ingredients(), 
+    return jsonify(all_ingredients)
+
 # Retrieve all cocktails with the given ID from the database
 @app.route('/cocktails/<int:id>', methods=['GET'])
 def get_cocktail(id):
 
     cocktail_by_id = get_cocktail_by_id(id)
+    print(cocktail_by_id)
     return format_result([cocktail_by_id])
 
 @app.route('/cocktails/ingredients/<string:ingredient>', methods=['GET'])
@@ -45,37 +52,68 @@ def get_all_cocktails_sorted_by_name_asc():
    sorted_cocktails = get_cocktails_sorted_by_name_asc()
    return format_result(sorted_cocktails)
 
-
-
-@app.route('/cocktails/update-cocktail/<string:id>', methods=['PUT'])
-def update_cocktail(id):
-
-    #get cocktail recipe json from body request
+@app.route('/cocktails/add-new-cocktail', methods=['POST'])
+def add_new_cocktail():
+    #get cocktail json from body request
     cocktail = request.get_json()
-    recipe=cocktail['recipe']
+    name=cocktail['name']
+    country = cocktail['country']
+    calories = cocktail['calories']
+    ingredients=cocktail['ingredients']
+    amounts=cocktail['amounts']
+    units=cocktail['units']
+    
+    print(name, country, calories, ingredients, amounts, units)
+    add_new_cocktail = post_new_cocktail(name,country, calories, ingredients, amounts, units)
+    return add_new_cocktail
+
+@app.route('/cocktails/update-cocktail-ingredient-amount', methods=['PUT'])
+def update_cocktail_ingredient_amounts():
+
+    #get cocktail ingredient details from body request json
+    ingredient = request.get_json()
+    cocktailId=ingredient['cocktailId']
+    ingredientId = ingredient['ingredientId']
+    unit=ingredient['unit']
+    amount = ingredient['amount']
 
     
-    #Here we'll call a db_operations method that update a cocktail in database  that takes as params the cocktail id and recipe and returns all the updated cocktail data. For now we use mocked data 
-    updated_cocktail_details = {
-      "updated_cocktail_id:": id,
-      "updated_cocktail_name": 'name',
-      "updated_cocktail_ingredients": ' cocktail ingredients',
-      "updated_cocktail_recipe": recipe
-    } 
+    #Here we'll call a db_operations method that update a cocktail in database  that updates cocktail
+    updated_cocktail = modify_ingredients(cocktailId, ingredientId,unit,amount)
       
-    return {"message": "cocktail updated sucessfully!", "updated_cocktail_details: ":  updated_cocktail_details}
+    return updated_cocktail
 
+@app.route('/cocktails/add-new-ingredients', methods=['PUT'])
+def add_cocktail_ingredients():
+
+    #get cocktail ingredient details from body request json
+    ingredient = request.get_json()
+    cocktailId = ingredient['cocktailId']
+    ingredients = ingredient['ingredients']
+    amounts = ingredient['amounts']
+    units = ingredient['units']
+
+    #call db method to add new ingredients
+    
+    add_new_ingredients =  add_new_ingredient_to_cocktail(cocktailId,ingredients,amounts,units)
+      
+    return add_new_ingredients 
+
+@app.route('/cocktails/<string:cocktailid>/delete-ingredient/<string:ingredientid>', methods=['DELETE'])
+def delete_cocktail_ingredient(cocktailid, ingredientid):
+
+    #Here we'll call a db_operations method that removes the cocktail ingredient in database 
+    remove_cocktail = delete_ingredient_for_cocktail(cocktailid, ingredientid)
+    
+    return remove_cocktail
+                                                     
+                                        
 @app.route('/cocktails/delete-cocktail/<string:id>', methods=['DELETE'])
-def delete_cocktail(id):
-
+def delete_cocktail_by_id(id):
+    #Here we'll call a db_operations method that removes the cocktail in database 
+    remove_cocktail = delete_cocktail(id)
     
-    #Here we'll call a db_operations method that removes the cocktail in database and takes as params the cocktail id and if cocktail was succcesfully deleted returns a  boolean true and if not, false
-    cocktail_was_removed = True
-    
-    if cocktail_was_removed:
-        return {"message": "cocktail with id {} was removed sucessfully!".format(id)}
-    else:
-        return {"message": "There was an error removing cocktail with id {}".format(id)}
+    return remove_cocktail
 
 if __name__ == '__main__':
     # This condition checks whether the Python script is being run directly (not imported as a module).

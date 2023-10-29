@@ -15,8 +15,8 @@ def format_result(cocktails):
             'id': cocktail[0],
             'name': cocktail[1],
             'calories': cocktail[2],
-            'country origin': cocktail[3],
-            'is Alcoholic':  'True' if cocktail[4] == 1 else 'False'
+            'country_origin': cocktail[3],
+            'is_Alcoholic':  'True' if cocktail[4] == 1 else 'False'
         }
         cocktail_list.append(cocktail_dict)
     
